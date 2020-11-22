@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
-import { Card, Typography } from '@material-ui/core';
+import { Card, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { ThumbUpRounded, ThumbDownRounded, GradeRounded, ChatBubbleRounded } from '@material-ui/icons';
 
 const theme = createMuiTheme({
@@ -59,25 +59,39 @@ export default class Choice extends React.Component {
                 </Grid>
                 <Grid container xs={12} direction='row'>
                         <Paper elevation={2}>
-                            <Grid container xs wrap='nowrap' direction='column' spacing={2} style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
-                                <Grid container item xs direction='row'>
+                            <Grid container xs wrap='nowrap' direction='column' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
+                                <Grid container item xs direction='row' alignItems='center'>
                                     <Typography variant='h5'>Alternative 1</Typography>
-                                    <Grid container item xs={2} justify='center' alignItems='center'>
-                                        <GradeRounded />
-                                    </Grid>
+                                    <Tooltip title='Mark as final' placement='right'>
+                                        <IconButton>
+                                            <GradeRounded />
+                                        </IconButton>
+                                    </Tooltip>
                                 </Grid>
                                 <Grid container item xs>
                                     <Typography>The description of the alternative can be somewhat long. I allowed for up to four lines of text in the input. The text will wrap accordingly.</Typography>
                                 </Grid>
                                 <Grid container item direction='row'>
                                     <Grid container xs justify='center'>
-                                        <ThumbUpRounded />
+                                        <Tooltip title='Liked by:'>
+                                            <IconButton>
+                                                <ThumbUpRounded />
+                                            </IconButton>
+                                        </Tooltip>
                                     </Grid>
                                     <Grid container xs justify='center'>
-                                        <ThumbDownRounded />
+                                        <Tooltip title='Disliked by:'>
+                                            <IconButton>
+                                                <ThumbDownRounded />
+                                            </IconButton>
+                                        </Tooltip>
                                     </Grid>
                                     <Grid container xs justify='center'>
-                                        <ChatBubbleRounded />
+                                        <Tooltip title='Feedback'>
+                                            <IconButton>
+                                                <ChatBubbleRounded />
+                                            </IconButton>
+                                        </Tooltip>
                                     </Grid>
                                 </Grid>
                             </Grid>
