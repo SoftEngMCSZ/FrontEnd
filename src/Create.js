@@ -18,10 +18,10 @@ const theme = createMuiTheme({
     palette: {
         type: 'light',
         primary: {
-            main: "#7e57c2", //purple
+            main: '#009688', //teal
         },
         secondary: {
-            main: '#ba68c8', //green
+            main: '#ffb74d', //orange
         },
     },
     formControl: {
@@ -159,7 +159,7 @@ export default class Create extends React.Component {
                   </Grid>
                 )
               })}
-              <Grid item xs={12} xs container direction='row-reverse'>
+              <Grid item xs={12} container direction='row-reverse'>
                 <Button size='small' onClick={this.addAlternative}>+ Add Alternative</Button>
               </Grid>
               <Grid item xs={12}>

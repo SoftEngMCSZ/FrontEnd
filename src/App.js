@@ -15,16 +15,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import Choice from './Choice.js';
+import SignIn from './SignIn.js';
 
 const theme = createMuiTheme({
   spacing: 8,
   palette: {
       type: 'light',
       primary: {
-          main: "#7e57c2", //purple
+        main: '#009688', //teal
       },
       secondary: {
-          main: '#ba68c8', //green
+          main: '#ffb74d', //orange
       },
   },
   formControl: {
@@ -61,7 +62,7 @@ export default function App() {
             <Choice />
           </Route>
           <Route path="/">
-            <Home />
+            <SignIn />
           </Route>
         </Switch>
       </div>
@@ -69,22 +70,6 @@ export default function App() {
   );
 }
 
-function Home() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth="sm">
-        <Grid container spacing={1}>
-          <Grid item xs={12} direction='row' justify='center' alignItems='flex-start'>
-            <Typography variant='h3'>What Do?</Typography>
-          </Grid>
-          <Grid item xs={12} direction='row' justify='center' alignItems='flex-start'>
-            <Typography variant='h6'>Deciding has never been easier.</Typography>
-          </Grid>
-        </Grid>
-      </Container>
-    </ThemeProvider>
-  );
-}
 
 
 

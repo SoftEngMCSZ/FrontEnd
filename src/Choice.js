@@ -3,26 +3,21 @@ import axios from 'axios';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
 import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
 import { Card, IconButton, Tooltip, Typography } from '@material-ui/core';
-import { ThumbUpRounded, ThumbDownRounded, GradeRounded, ChatBubbleRounded } from '@material-ui/icons';
+import { ThumbUpRounded, ThumbDownRounded, GradeRounded, ModeCommentRounded } from '@material-ui/icons';
+import Feedback from './Feedback.js'
+import Alternative from './Alternative.js'
 
 const theme = createMuiTheme({
     spacing: 8,
     palette: {
         type: 'light',
         primary: {
-            main: "#7e57c2", //purple
+            main: '#009688', //teal
         },
         secondary: {
-            main: '#ba68c8', //green
+            main: '#ffb74d', //orange
         },
     },
     formControl: {
@@ -34,18 +29,50 @@ export default class Choice extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            choiceID: '',
-            question: '',
+            user: {name: 'charlotte'},
+            choiceID: 'ABCDEFG',
+            question: 'What should we get for lunch?',
             finalDecision: {},
-            alternatives: [],
+            alternatives: [
+                {alternativeID: 'ABC123', 
+                 description: 'Habachi',
+                 approvals: [{name: 'Jimmy'}],
+                 disapprovals: [{name: 'Bobby'},
+                                {name: 'Lucy'}],
+                 feedback: [{author: 'Bobby',
+                             content: 'Habachi sux',
+                             timestamp: '11-11-2020'},
+                            {author: 'Miranda C.',
+                             content: 'What is wrong with you. Hibachi is excellent. We should totally go.',
+                             timestamp: '11-12-2020'}]},
+                {alternativeID: 'ABC789', 
+                 description: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
+                 approvals: [{name: 'Bobby'}],
+                 disapprovals: [{name: 'Jimmy'},
+                                {name: 'Lucy'}],
+                 feedback: [{author: 'Bobby',
+                             content: 'McDonalds clearly superior',
+                             timestamp: '11-11-2020'}]}            ],
             maxCollabs: 0,
             collaborators: []
         }
+
+        this.updateApproval = this.updateApproval.bind(this);
+        this.updateDisapproval = this.updateDisapproval.bind(this);
+        this.showFeedback= this.showFeedback.bind(this);
     }
 
     componentDidMount(){}
 
     componentWillUnmount(){}
+
+    updateApproval = (e) => {}
+
+    updateDisapproval = (e) => {}
+
+    showFeedback = (e) => {
+        return ( <Feedback alternative={this.state.alternatives[e.target.id]}/> );
+    }
 
     render() {
         let alts = this.state.alternatives;
@@ -55,47 +82,15 @@ export default class Choice extends React.Component {
             <Grid container spacing={1} direction='column'>
                 <Grid container xs={12} direction='row' align-content-xs-center justify='center' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
                     <Typography variant='h5'>What should we do about...</Typography>
-                    <Typography variant='h4'>The choice we have to make?</Typography>
+                    <Typography variant='h4'>{this.state.question}</Typography>
+                    <Typography variant='overline'>{`Choice Code: ${this.state.choiceID}`}</Typography>
                 </Grid>
-                <Grid container xs={12} direction='row'>
-                        <Paper elevation={2}>
-                            <Grid container xs wrap='nowrap' direction='column' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
-                                <Grid container item xs direction='row' alignItems='center'>
-                                    <Typography variant='h5'>Alternative 1</Typography>
-                                    <Tooltip title='Mark as final' placement='right'>
-                                        <IconButton>
-                                            <GradeRounded />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid>
-                                <Grid container item xs>
-                                    <Typography>The description of the alternative can be somewhat long. I allowed for up to four lines of text in the input. The text will wrap accordingly.</Typography>
-                                </Grid>
-                                <Grid container item direction='row'>
-                                    <Grid container xs justify='center'>
-                                        <Tooltip title='Liked by:'>
-                                            <IconButton>
-                                                <ThumbUpRounded />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Grid>
-                                    <Grid container xs justify='center'>
-                                        <Tooltip title='Disliked by:'>
-                                            <IconButton>
-                                                <ThumbDownRounded />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Grid>
-                                    <Grid container xs justify='center'>
-                                        <Tooltip title='Feedback'>
-                                            <IconButton>
-                                                <ChatBubbleRounded />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                <Grid item xs direction='row'>
+                    {alts.map((alt, idx) => {
+                        return (
+                            <Alternative data={alt} id={idx}/>
+                        );
+                    })}
                 </Grid>
             </Grid>
             </Container>
