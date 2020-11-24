@@ -27,11 +27,11 @@ export default class SignIn extends React.Component {
             username : '',
             password : '',
             choiceID : '',
-            choice : {}
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.signIn = this.signIn.bind(this);
+        this.signUp = this.signUp.bind(this);
     }
 
     componentDidMount () {
@@ -68,9 +68,38 @@ export default class SignIn extends React.Component {
                 url : `/choice/${this.state.choiceID}`
             });
 
-            this.setState({ choice : response2});
+            this.props.updateChoice(response2);
 
-            <Redirect to='/choice/:choiceID/b'/>
+            <Redirect to={`/choice/${this.state.choiceID}/view`}/>
+        }
+    }
+
+    signUp = async (e) => {
+        let body = {
+            choiceID : this.state.choiceID,
+            username : this.state.username,
+            password : this.state.password
+        }
+
+        const response = await axios({
+            method: 'POST',
+            url: `/choice/login`,
+            body: JSON.stringify(body)
+        });
+
+        if (response.code === 200) {
+            const response2 = await axios({
+                method: 'GET',
+                auth : {
+                    username : this.state.username,
+                    password : this.state.password
+                },
+                url : `/choice/${this.state.choiceID}`
+            });
+
+            this.props.updateChoice(response2);
+
+            <Redirect to={`/choice/${this.state.choiceID}/view`}/>
         }
     }
 

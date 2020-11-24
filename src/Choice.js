@@ -3,6 +3,7 @@ import axios from 'axios';
 import {createMuiTheme, ThemeProvider, Container, Grid, Typography} from '@material-ui/core';
 import Feedback from './Feedback.js'
 import Alternative from './Alternative.js'
+import { Redirect } from 'react-router-dom'
 
 const theme = createMuiTheme({
     spacing: 8,
@@ -57,10 +58,19 @@ export default class Choice extends React.Component {
         this.updateApproval = this.updateApproval.bind(this);
         this.updateDisapproval = this.updateDisapproval.bind(this);
         this.showFeedback= this.showFeedback.bind(this);
-        this.updateChoice = this.updateChoice.bind(this);
     }
 
-    componentDidMount(){ }
+    componentDidMount(){
+        const { match: {params}} = this.props;
+        if (this.props.choice !== null) {
+            if (this.props.choice.choiceID !== params.choiceID) {
+                this.props.history.push(`/choice/${params.choiceID}`);
+            }
+            this.setState({choice : this.props.choice});
+        } else {
+            this.props.history.push(`/choice/${params.choiceID}`);
+        }
+     }
 
     componentWillUnmount(){}
 
@@ -70,10 +80,6 @@ export default class Choice extends React.Component {
 
     showFeedback = (e) => {
         return ( <Feedback alternative={this.state.alternatives[e.target.id]}/> );
-    }
-
-    updateChoice = (response) => {
-        this.setState({ choice : response });
     }
 
     render() {
@@ -90,7 +96,7 @@ export default class Choice extends React.Component {
                 <Grid item xs direction='row'>
                     {alts.map((alt, idx) => {
                         return (
-                            <Alternative data={alt} id={idx} currentUser={this.state.user} updateChoice={this.updateChoice}/>
+                            <Alternative data={alt} id={idx} currentUser={this.state.user} updateChoice={this.props.updateChoice}/>
                         );
                     })}
                 </Grid>

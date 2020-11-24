@@ -28,38 +28,78 @@ const theme = createMuiTheme({
   }
 });
 
-export default function App() {
+export default class App extends React.Component {
 
-  return (
-    <Router>
-      <ThemeProvider theme={theme}>
-        <AppBar position='static'>
-          <Toolbar>
-            <Typography variant='h5'>
-              WhatDo?
-            </Typography>
-            <Grid container spacing={1}>
-              <Grid item xs={12} xs container direction='row'>
-                <Button color="inherit" component={Link} to='/'>Home</Button>
-                <Button color="inherit" component={Link} to='/create'>Create</Button>
+  constructor(props){
+    super(props)
+    this.state = {
+      choice : {choiceID: 'ABCDEFG',
+      question: 'What should we get for lunch BUT IN APP?',
+      finalDecision: {},
+      alternatives: [
+          {alternativeID: 'ABC123', 
+          contents: 'Habachi',
+          approvals: [{name: 'Jimmy'}],
+          disapprovals: [{name: 'Bobby'},
+                          {name: 'Lucy'}],
+          feedback: [{author: 'Bobby',
+                      content: 'Habachi sux',
+                      timestamp: '11-11-2020'},
+                      {author: 'Miranda C.',
+                      content: 'What is wrong with you. Hibachi is excellent. We should totally go.',
+                      timestamp: '11-12-2020'}]},
+          {alternativeID: 'ABC789', 
+          contents: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
+          approvals: [{name: 'Bobby'}],
+          disapprovals: [{name: 'Jimmy'},
+                          {name: 'Lucy'}],
+          feedback: [{author: 'Bobby',
+                      content: 'McDonalds clearly superior',
+                      timestamp: '11-11-2020'}]}            ],
+      maxCollabs: 0,
+      collaborators: []}
+    }
+
+    this.updateChoice = this.updateChoice.bind(this);
+
+  }
+
+  updateChoice = (response) => {
+    this.setState({ choice : response });
+  }
+  
+  render() {
+    return (
+      <Router>
+        <ThemeProvider theme={theme}>
+          <AppBar position='static'>
+            <Toolbar>
+              <Typography variant='h5'>
+                WhatDo?
+              </Typography>
+              <Grid container spacing={1}>
+                <Grid item xs={12} xs container direction='row'>
+                  <Button color="inherit" component={Link} to='/'>Home</Button>
+                  <Button color="inherit" component={Link} to='/create'>Create</Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </ThemeProvider>
+            </Toolbar>
+          </AppBar>
+        </ThemeProvider>
 
-      <div>
-        <Switch>
-          <Route path="/create" component={Create} />
-          <Route path='/choice/:choiceID?=' component={Choice}/>
-          <Route path="/choice/:choiceID" component={SignIn} />
-          <Route path="/choice" component={Choice} />
-          <Route path='/admin' component={Admin} />
-          <Route path="/" component={SignIn}/>
-        </Switch>
-      </div>
-    </Router>
-  );
+        <div>
+          <Switch>
+            <Route path="/create" component={Create} />
+            <Route path='/choice/:choiceID/view' render={(props) => (<Choice {...props} choice={this.state.choice} updateChoice={this.updateChoice}/>)}/>
+            <Route path="/choice/:choiceID" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice}/>)} />
+            <Route path="/choice" component={Choice} />
+            <Route path='/admin' component={Admin} />
+            <Route path="/" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice}/>)}/>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 
