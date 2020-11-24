@@ -30,9 +30,6 @@ export default class ChoiceTableItem extends React.Component {
                 <Paper elevation={2}>
                     <Grid container item xs direction='row' alignItems='center' justify='space-between' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(1)}}>
                         <Typography variant='h6'>{choice.question}</Typography>
-                        <Grid container item xs style={{marginBottom: `${theme.spacing(1)}px auto`, paddingLeft: theme.spacing(1)}}>
-                            <Typography variant='caption'>{choice.dateCreated}</Typography>
-                        </Grid>
                     </Grid>
                 </Paper>
             </ThemeProvider>

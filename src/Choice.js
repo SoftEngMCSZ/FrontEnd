@@ -1,11 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
-import { Card, IconButton, Tooltip, Typography } from '@material-ui/core';
-import { ThumbUpRounded, ThumbDownRounded, GradeRounded, ModeCommentRounded } from '@material-ui/icons';
+import {createMuiTheme, ThemeProvider, Container, Grid, Typography} from '@material-ui/core';
 import Feedback from './Feedback.js'
 import Alternative from './Alternative.js'
 
@@ -35,7 +30,7 @@ export default class Choice extends React.Component {
             finalDecision: {},
             alternatives: [
                 {alternativeID: 'ABC123', 
-                 description: 'Habachi',
+                 contents: 'Habachi',
                  approvals: [{name: 'Jimmy'}],
                  disapprovals: [{name: 'Bobby'},
                                 {name: 'Lucy'}],
@@ -46,7 +41,7 @@ export default class Choice extends React.Component {
                              content: 'What is wrong with you. Hibachi is excellent. We should totally go.',
                              timestamp: '11-12-2020'}]},
                 {alternativeID: 'ABC789', 
-                 description: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
+                 contents: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
                  approvals: [{name: 'Bobby'}],
                  disapprovals: [{name: 'Jimmy'},
                                 {name: 'Lucy'}],

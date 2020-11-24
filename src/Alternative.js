@@ -3,7 +3,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
-import { Card, IconButton, Tooltip, Typography } from '@material-ui/core';
+import { IconButton, Tooltip, Typography } from '@material-ui/core';
 import { ThumbUpRounded, ThumbDownRounded, GradeRounded, ModeCommentRounded } from '@material-ui/icons';
 import Feedback from './Feedback.js'
 
@@ -84,7 +84,7 @@ export default class Alternative extends React.Component {
                     </Tooltip>
                 </Grid>
                 <Grid container item xs>
-                    <Typography variant='body1'>{alt.description}</Typography>
+                    <Typography variant='body1'>{alt.contents}</Typography>
                 </Grid>
                 <Grid container item direction='row'>
                     <Grid container xs justify='center'>

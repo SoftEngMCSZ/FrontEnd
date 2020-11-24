@@ -7,12 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import {createMuiTheme, ThemeProvider, Grid, Button, AppBar, Toolbar, Typography} from '@material-ui/core';
 import Choice from './Choice.js';
 import SignIn from './SignIn.js';
 import Admin from './Admin.js';

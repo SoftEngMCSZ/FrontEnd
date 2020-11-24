@@ -48,7 +48,7 @@ export default class SignIn extends React.Component {
             <Grid item xs style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
             <Paper elevation={2}>
                 <Grid container item xs direction='column' alignItems='center' justify='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
-                    <Typography variant='h6'>Sign in to view choice.</Typography>
+                    <Typography variant='h6'>Sign in to view a choice.</Typography>
                     <Grid container item xs direction='column'>
                     <TextField margin='dense' 
                                 label='Your Name' 

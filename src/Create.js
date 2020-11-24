@@ -1,16 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
-import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
+import {createMuiTheme, ThemeProvider, Container, Grid, Paper, InputLabel, MenuItem, FormHelperText, FormControl, TextField, Button, Select} from '@material-ui/core';
 import { v4 as uuidv4} from 'uuid';
 
 const theme = createMuiTheme({
@@ -37,8 +27,8 @@ export default class Create extends React.Component {
       super(props)
       this.state = {
         question: '',
-        alternatives: [{alternativeID: uuid1, description: '', approvals: [], disapprovals: [], feedback: []},
-                       {alternativeID: uuid2, description: '', approvals: [], disapprovals: [], feedback: []}],
+        alternatives: [{alternativeID: uuid1, contents: '', approvals: [], disapprovals: [], feedback: []},
+                       {alternativeID: uuid2, contents: '', approvals: [], disapprovals: [], feedback: []}],
         maxCollabs: 0,
         username : '',
         password : ''
@@ -58,11 +48,11 @@ export default class Create extends React.Component {
                          maxCollabs : this.state.maxCollabs}
         if (choice.question === '' 
             || choice.maxCollabs === 0
-            || choice.alternatives[0].description === ''
-            || choice.alternatives[1].description === '') { 
+            || choice.alternatives[0].contents === ''
+            || choice.alternatives[1].contents === '') { 
                 return; }
             
-        choice.alternatives = this.state.alternatives.filter(alt => alt.description != '');
+        choice.alternatives = this.state.alternatives.filter(alt => alt.contents != '');
 
         const response = await axios({
             method: 'POST',
@@ -77,13 +67,13 @@ export default class Create extends React.Component {
         if (this.state.alternatives.length < 5) {
             let uuid = uuidv4();
             this.setState((prevState) => ({
-                alternatives:[...prevState.alternatives, {alternativeID: {uuid}, description: '', approvals: [], disapprovals: [], feedback: []}],
+                alternatives:[...prevState.alternatives, {alternativeID: {uuid}, contents: '', approvals: [], disapprovals: [], feedback: []}],
             }));
         }
     }
   
     handleChange = (e) => {
-      if (['description'].includes(e.target.className)) {
+      if (['contents'].includes(e.target.className)) {
         let alternatives = [...this.state.alternatives];
         alternatives[e.target.dataset.id][e.target.className] = e.target.value;
         this.setState({ alternatives }, () => console.log(this.state.alternatives));
@@ -161,7 +151,7 @@ export default class Create extends React.Component {
                 </FormControl>
               </Grid>
               { alts.map((val, idx) => {
-                let altDescId = `description-${idx}`;
+                let altDescId = `contents-${idx}`;
                 return (
                   <Grid item xs={12}>
                     <Paper elevation={2}>
@@ -171,7 +161,7 @@ export default class Create extends React.Component {
                         </Grid>
                         <Grid item xs={12}>
                           <TextField label='Alternative description'
-                                      className='description'
+                                      className='contents'
                                       data-id={idx}
                                       name={altDescId}
                                       id={altDescId}

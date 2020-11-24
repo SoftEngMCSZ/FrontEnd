@@ -1,6 +1,5 @@
-import { Typography, Grid, Divider, TextField, IconButton, ThemeProvider, createMuiTheme} from '@material-ui/core';
-import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import React from 'react'
+import { Typography, Grid, ThemeProvider, createMuiTheme} from '@material-ui/core';
 
 const theme = createMuiTheme({
     spacing: 8,

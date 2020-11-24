@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Grid, Button, TextField, Typography, ThemeProvider, createMuiTheme, Divider} from '@material-ui/core'
+import {Container, Grid, Button, TextField, Typography, ThemeProvider, createMuiTheme} from '@material-ui/core'
 import ChoiceTableItem from './ChoiceTableItem.js'
 
 const theme = createMuiTheme({
@@ -23,8 +23,8 @@ export default class Admin extends React.Component {
         super(props);
 
         this.state = {
-            choices : [ { question : 'Best dog?', dateCreated : '10-20-20'},
-                        { question : 'What should we get for lunch?', dateCreated : '11-09-20'}]
+            choices : [ { question : 'Best dog?'},
+                        { question : 'What should we get for lunch?'}]
         }
     }
 

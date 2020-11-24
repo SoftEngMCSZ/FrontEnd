@@ -1,4 +1,4 @@
-import { createMuiTheme, ThemeProvider, Grid, Divider, TextField, IconButton} from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, Grid, TextField, IconButton} from '@material-ui/core';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import React from 'react'
 import Comment from './Comment.js'
