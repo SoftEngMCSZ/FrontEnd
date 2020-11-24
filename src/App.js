@@ -7,15 +7,15 @@ import {
   Link
 } from "react-router-dom";
 import React from 'react';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {createMuiTheme, ThemeProvider, makeStyles} from '@material-ui/core/styles';
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import Choice from './Choice.js';
 import SignIn from './SignIn.js';
+import Admin from './Admin.js';
 
 const theme = createMuiTheme({
   spacing: 8,
@@ -55,15 +55,11 @@ export default function App() {
 
       <div>
         <Switch>
-          <Route path="/create">
-            <Create />
-          </Route>
-          <Route path="/choice">
-            <Choice />
-          </Route>
-          <Route path="/">
-            <SignIn />
-          </Route>
+          <Route path="/create" component={Create} />
+          <Route path="/choice/:choiceID" component={SignIn} />
+          <Route path="/choice" component={Choice} />
+          <Route path='/admin' component={Admin} />
+          <Route path="/" component={SignIn}/>
         </Switch>
       </div>
     </Router>

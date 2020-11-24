@@ -19,7 +19,7 @@ const theme = createMuiTheme({
 
 export default class SignIn extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             username : '',
             password : '',
@@ -27,6 +27,13 @@ export default class SignIn extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount () {
+        if (this.props.match != null) {
+            const { match: {params}} = this.props;
+            this.setState({choiceID : params.choiceID})
+        }
     }
 
     handleChange  = (e) => {
@@ -55,14 +62,14 @@ export default class SignIn extends React.Component {
                                 name='password'
                                 type='password'
                                 InputLabelProps={{shrink: true}}
-                                value={this.state.name}
+                                value={this.state.password}
                                 onChange={this.handleChange}
                                 ></TextField>
                         <TextField margin='dense' 
                                 label='Choice Code' 
                                 name='choiceID'
                                 InputLabelProps={{shrink: true}}
-                                value={this.state.name}
+                                value={this.state.choiceID}
                                 onChange={this.handleChange}
                                 ></TextField>
                     </Grid>

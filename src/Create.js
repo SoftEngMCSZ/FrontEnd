@@ -39,7 +39,9 @@ export default class Create extends React.Component {
         question: '',
         alternatives: [{alternativeID: uuid1, description: '', approvals: [], disapprovals: [], feedback: []},
                        {alternativeID: uuid2, description: '', approvals: [], disapprovals: [], feedback: []}],
-        maxCollabs: 0
+        maxCollabs: 0,
+        username : '',
+        password : ''
       }
   
       this.handleChange= this.handleChange.bind(this);
@@ -51,8 +53,16 @@ export default class Create extends React.Component {
     componentWillUnmount(){}
 
     createChoice = async (event) => {
-        const choice = this.state;
-        if (choice.question === '' || choice.maxCollabs === 0) return;
+        const choice = { question : this.state.question,
+                         alternatives : this.state.alternatives,
+                         maxCollabs : this.state.maxCollabs}
+        if (choice.question === '' 
+            || choice.maxCollabs === 0
+            || choice.alternatives[0].description === ''
+            || choice.alternatives[1].description === '') { 
+                return; }
+            
+        choice.alternatives = this.state.alternatives.filter(alt => alt.description != '');
 
         const response = await axios({
             method: 'POST',
@@ -97,6 +107,28 @@ export default class Create extends React.Component {
                 <h1 className='title'>
                   Create Choice
                 </h1>
+              </Grid>
+              <Grid item xs={6}>
+              <TextField label='Your Name' 
+                          className='username'
+                          name='username'
+                          variant='standard' 
+                          margin='dense' 
+                          InputLabelProps={{shrink: true}} 
+                          type='text'
+                          value={this.state.username}
+                          onChange={this.handleChange}></TextField>
+              </Grid>
+              <Grid item xs={6}>
+              <TextField label='Password (optional)' 
+                          className='password'
+                          name='password'
+                          variant='standard' 
+                          margin='dense' 
+                          InputLabelProps={{shrink: true}} 
+                          type='password'
+                          value={this.state.password}
+                          onChange={this.handleChange}></TextField>
               </Grid>
               <Grid item xs={6}>
                 <TextField label='Question' 
