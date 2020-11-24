@@ -24,40 +24,43 @@ export default class Choice extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            user: {name: 'charlotte'},
-            choiceID: 'ABCDEFG',
-            question: 'What should we get for lunch?',
-            finalDecision: {},
-            alternatives: [
-                {alternativeID: 'ABC123', 
-                 contents: 'Habachi',
-                 approvals: [{name: 'Jimmy'}],
-                 disapprovals: [{name: 'Bobby'},
-                                {name: 'Lucy'}],
-                 feedback: [{author: 'Bobby',
-                             content: 'Habachi sux',
-                             timestamp: '11-11-2020'},
-                            {author: 'Miranda C.',
-                             content: 'What is wrong with you. Hibachi is excellent. We should totally go.',
-                             timestamp: '11-12-2020'}]},
-                {alternativeID: 'ABC789', 
-                 contents: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
-                 approvals: [{name: 'Bobby'}],
-                 disapprovals: [{name: 'Jimmy'},
-                                {name: 'Lucy'}],
-                 feedback: [{author: 'Bobby',
-                             content: 'McDonalds clearly superior',
-                             timestamp: '11-11-2020'}]}            ],
-            maxCollabs: 0,
-            collaborators: []
+            user : {name: 'charlotte'},
+            choice : {
+                choiceID: 'ABCDEFG',
+                question: 'What should we get for lunch?',
+                finalDecision: {},
+                alternatives: [
+                    {alternativeID: 'ABC123', 
+                    contents: 'Habachi',
+                    approvals: [{name: 'Jimmy'}],
+                    disapprovals: [{name: 'Bobby'},
+                                    {name: 'Lucy'}],
+                    feedback: [{author: 'Bobby',
+                                content: 'Habachi sux',
+                                timestamp: '11-11-2020'},
+                                {author: 'Miranda C.',
+                                content: 'What is wrong with you. Hibachi is excellent. We should totally go.',
+                                timestamp: '11-12-2020'}]},
+                    {alternativeID: 'ABC789', 
+                    contents: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
+                    approvals: [{name: 'Bobby'}],
+                    disapprovals: [{name: 'Jimmy'},
+                                    {name: 'Lucy'}],
+                    feedback: [{author: 'Bobby',
+                                content: 'McDonalds clearly superior',
+                                timestamp: '11-11-2020'}]}            ],
+                maxCollabs: 0,
+                collaborators: []
+            }
         }
 
         this.updateApproval = this.updateApproval.bind(this);
         this.updateDisapproval = this.updateDisapproval.bind(this);
         this.showFeedback= this.showFeedback.bind(this);
+        this.updateChoice = this.updateChoice.bind(this);
     }
 
-    componentDidMount(){}
+    componentDidMount(){ }
 
     componentWillUnmount(){}
 
@@ -69,21 +72,25 @@ export default class Choice extends React.Component {
         return ( <Feedback alternative={this.state.alternatives[e.target.id]}/> );
     }
 
+    updateChoice = (response) => {
+        this.setState({ choice : response });
+    }
+
     render() {
-        let alts = this.state.alternatives;
+        let alts = this.state.choice.alternatives;
         return (
         <ThemeProvider theme={theme}>
             <Container maxWidth='sm'>
             <Grid container spacing={1} direction='column'>
                 <Grid container xs={12} direction='row' align-content-xs-center justify='center' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
                     <Typography variant='h5'>What should we do about...</Typography>
-                    <Typography variant='h4'>{this.state.question}</Typography>
-                    <Typography variant='overline'>{`Choice Code: ${this.state.choiceID}`}</Typography>
+                    <Typography variant='h4'>{this.state.choice.question}</Typography>
+                    <Typography variant='overline'>{`Choice Code: ${this.state.choice.choiceID}`}</Typography>
                 </Grid>
                 <Grid item xs direction='row'>
                     {alts.map((alt, idx) => {
                         return (
-                            <Alternative data={alt} id={idx}/>
+                            <Alternative data={alt} id={idx} currentUser={this.state.user} updateChoice={this.updateChoice}/>
                         );
                     })}
                 </Grid>

@@ -1,6 +1,7 @@
 import { createMuiTheme, ThemeProvider, Grid, TextField, IconButton} from '@material-ui/core';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import React from 'react'
+import axios from 'axios'
 import Comment from './Comment.js'
 import { v4 as uuidv4} from 'uuid';
 
@@ -25,16 +26,32 @@ export default class Feedback extends React.Component {
         super(props)
 
         this.state = {
-            feedbackID : '',
+            feedbackID : uuidv4(),
             alternativeID : this.props.data.alternativeID,
             contents : '',
-
+            author : this.props.currentUser.name,
+            timestamp : ''
         }
     }
 
     componentDidMount(){}
 
     componentWillUnmount(){}
+
+    postFeedback = async (e) => {
+        let feedback = this.state;
+        feedback.timestamp = new Date().toISOString();
+
+        if (feedback.contents === '') { return; }
+
+        const response = await axios({
+            method: 'POST',
+            url: `/choice/feedback`,
+            body: JSON.stringify(feedback)
+        });
+
+        this.props.updateChoice(response);
+    }
 
     render() {
         let comments = this.props.data.feedback;
@@ -52,7 +69,7 @@ export default class Feedback extends React.Component {
                         rowsMax={2}
                         InputLabelProps={{shrink: true}}></TextField>
                     </Grid>
-                    <IconButton>
+                    <IconButton onClick={this.postFeedback}>
                         <SendRoundedIcon />
                     </IconButton>
                 </Grid>

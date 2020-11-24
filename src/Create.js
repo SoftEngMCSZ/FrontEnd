@@ -73,7 +73,6 @@ export default class Create extends React.Component {
     }
   
     handleChange = (e) => {
-      console.log(e.target.name);
       if (['contents'].includes(e.target.name)) {
         let alternatives = [...this.state.alternatives];
         alternatives[e.target.id][e.target.name] = e.target.value;

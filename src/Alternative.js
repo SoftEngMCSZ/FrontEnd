@@ -37,6 +37,10 @@ export default class Alternative extends React.Component {
         this.showFeedback = this.showFeedback.bind(this)
         this.updateApproval = this.updateApproval.bind(this)
         this.updateDisapproval = this.updateDisapproval.bind(this)
+        this.postAddApproval = this.postAddApproval.bind(this)
+        this.postRemoveApproval = this.postRemoveApproval.bind(this)
+        this.postAddDisapproval = this.postAddDisapproval.bind(this)
+        this.postRemoveDisapproval = this.postRemoveDisapproval.bind(this)
     }
 
     showFeedback = (e) => {
@@ -49,22 +53,96 @@ export default class Alternative extends React.Component {
         }
     }
 
-    updateApproval = (e) => {
+    updateApproval = async (e) => {
         if (this.state.liked === '') {
             this.setState({liked : 'primary'})
-            this.setState({disliked : ''})
+            await this.postAddApproval();
+
+            if (this.state.disliked === 'primary') {
+                this.setState({disliked : ''});
+                await this.postRemoveDisapproval();
+            }
+            
         } else {
             this.setState({liked : ''})
+            await this.postRemoveApproval();
         }
     }
 
-    updateDisapproval = (e) => {
+    updateDisapproval = async (e) => {
         if (this.state.disliked === '') {
             this.setState({disliked : 'primary'})
-            this.setState({liked : ''})
+            await this.postAddDisapproval();
+
+            if (this.state.liked === 'primary') {
+                this.setState({liked : ''})
+                await this.postRemoveApproval();
+            }
+            
         } else {
             this.setState({disliked : ''})
+            await this.postRemoveDisapproval();
         }
+    }
+
+    postAddApproval = async (event) => {
+        const body = { opinionType : 'approval',
+                        actionType : 'add',
+                        alternativeID : this.props.data.alternativeID,
+                        collabName: this.props.currentUser.name } 
+
+        const response = await axios({
+            method: 'POST',
+            url: `/choice/opinion`,
+            body: JSON.stringify(body)
+        });
+        
+        this.props.updateChoice(response);
+    }
+
+    postAddDisapproval = async (event) => {
+        const body = { opinionType : 'disapproval',
+                        actionType : 'add',
+                        alternativeID : this.props.data.alternativeID,
+                        collabName: this.props.currentUser.name } 
+
+        const response = await axios({
+            method: 'POST',
+            url: `/choice/opinion`,
+            body: JSON.stringify(body)
+        });
+        
+        this.props.updateChoice(response);
+    }
+
+    postRemoveApproval = async (event) => {
+        const body = { opinionType : 'approval',
+                        actionType : 'remove',
+                        alternativeID : this.props.data.alternativeID,
+                        collabName: this.props.currentUser.name } 
+
+        const response = await axios({
+            method: 'POST',
+            url: `/choice/opinion`,
+            body: JSON.stringify(body)
+        });
+        
+        this.props.updateChoice(response);
+    }
+
+    postRemoveDisapproval = async (event) => {
+        const body = { opinionType : 'disapproval',
+                        actionType : 'remove',
+                        alternativeID : this.props.data.alternativeID,
+                        collabName: this.props.currentUser.name } 
+
+        const response = await axios({
+            method: 'POST',
+            url: `/choice/opinion`,
+            body: JSON.stringify(body)
+        });
+        
+        this.props.updateChoice(response);
     }
 
     render(){
@@ -115,7 +193,7 @@ export default class Alternative extends React.Component {
                     </Grid>
                 </Grid>
                  { this.state.viewFeedback
-                    ? <Feedback data={alt} />
+                    ? <Feedback data={alt} currentUser={this.props.currentUser} updateChoice={this.props.updateChoice}/>
                     : null
                 }
             </Grid>

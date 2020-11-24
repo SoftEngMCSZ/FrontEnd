@@ -1,5 +1,8 @@
 import React from 'react'
 import { Typography , Grid, TextField, Button, Paper, ThemeProvider, createMuiTheme, Container } from '@material-ui/core'
+import  { Redirect, Route, Switch } from 'react-router-dom'
+import axios from 'axios'
+import Choice from './Choice.js'
 
 const theme = createMuiTheme({
     spacing: 8,
@@ -23,14 +26,16 @@ export default class SignIn extends React.Component {
         this.state = {
             username : '',
             password : '',
-            choiceID : ''
+            choiceID : '',
+            choice : {}
         }
 
         this.handleChange = this.handleChange.bind(this);
+        this.signIn = this.signIn.bind(this);
     }
 
     componentDidMount () {
-        if (this.props.match != null) {
+        if (this.props.match.params.choiceID != null) {
             const { match: {params}} = this.props;
             this.setState({choiceID : params.choiceID})
         }
@@ -38,6 +43,35 @@ export default class SignIn extends React.Component {
 
     handleChange  = (e) => {
         this.setState({[e.target.name]: e.target.value });
+    }
+
+    signIn = async (e) => {
+        let body = {
+            choiceID : this.state.choiceID,
+            username : this.state.username,
+            password : this.state.password
+        }
+
+        const response = await axios({
+            method: 'GET',
+            url: `/choice/login`,
+            body: JSON.stringify(body)
+        });
+
+        if (response.code === 200) {
+            const response2 = await axios({
+                method: 'GET',
+                auth : {
+                    username : this.state.username,
+                    password : this.state.password
+                },
+                url : `/choice/${this.state.choiceID}`
+            });
+
+            this.setState({ choice : response2});
+
+            <Redirect to='/choice/:choiceID/b'/>
+        }
     }
 
     render() {
@@ -73,8 +107,13 @@ export default class SignIn extends React.Component {
                                 onChange={this.handleChange}
                                 ></TextField>
                     </Grid>
-                    <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
-                        <Button variant='contained'>View Choice</Button>
+                    <Grid container item xs direction='row'>
+                        <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
+                            <Button variant='contained'>Sign In</Button>
+                        </Grid>
+                        <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
+                            <Button variant='contained'>Sign Up</Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Paper>

@@ -51,6 +51,7 @@ export default function App() {
       <div>
         <Switch>
           <Route path="/create" component={Create} />
+          <Route path='/choice/:choiceID?=' component={Choice}/>
           <Route path="/choice/:choiceID" component={SignIn} />
           <Route path="/choice" component={Choice} />
           <Route path='/admin' component={Admin} />
