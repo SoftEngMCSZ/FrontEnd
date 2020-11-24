@@ -115,7 +115,7 @@ export default class Alternative extends React.Component {
                     </Grid>
                 </Grid>
                  { this.state.viewFeedback
-                    ? <Feedback data={alt.feedback} />
+                    ? <Feedback data={alt} />
                     : null
                 }
             </Grid>

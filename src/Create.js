@@ -73,9 +73,10 @@ export default class Create extends React.Component {
     }
   
     handleChange = (e) => {
-      if (['contents'].includes(e.target.className)) {
+      console.log(e.target.name);
+      if (['contents'].includes(e.target.name)) {
         let alternatives = [...this.state.alternatives];
-        alternatives[e.target.dataset.id][e.target.className] = e.target.value;
+        alternatives[e.target.id][e.target.name] = e.target.value;
         this.setState({ alternatives }, () => console.log(this.state.alternatives));
       } else {
         this.setState({[e.target.name]: e.target.value });
@@ -163,18 +164,18 @@ export default class Create extends React.Component {
                           <TextField label='Alternative description'
                                       className='contents'
                                       data-id={idx}
-                                      name={altDescId}
-                                      id={altDescId}
+                                      name='contents'
+                                      id={idx}
                                       htmlFor={altDescId}
                                       variant='standard'
                                       margin='dense'
                                       fullWidth='true'
                                       multiline
                                       rowsMax={4}
+                                      type='text'
                                       InputLabelProps={{shrink: true}}
-                                      value={alts[idx].contents}
-                                      onChange={this.handleChange}
-                                      type='text'>Description</TextField>
+                                      value={this.state.alternatives[idx].contents}
+                                      onChange={this.handleChange}>Description</TextField>
                         </Grid>
                       </Grid>
                     </Paper>

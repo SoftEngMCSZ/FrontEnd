@@ -2,6 +2,7 @@ import { createMuiTheme, ThemeProvider, Grid, TextField, IconButton} from '@mate
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import React from 'react'
 import Comment from './Comment.js'
+import { v4 as uuidv4} from 'uuid';
 
 const theme = createMuiTheme({
     spacing: 8,
@@ -22,6 +23,13 @@ const theme = createMuiTheme({
 export default class Feedback extends React.Component {
     constructor(props){
         super(props)
+
+        this.state = {
+            feedbackID : '',
+            alternativeID : this.props.data.alternativeID,
+            contents : '',
+
+        }
     }
 
     componentDidMount(){}
@@ -29,7 +37,7 @@ export default class Feedback extends React.Component {
     componentWillUnmount(){}
 
     render() {
-        let comments = this.props.data;
+        let comments = this.props.data.feedback;
         return (
             <ThemeProvider theme={theme}>
             <Grid container xs direction='column'>
