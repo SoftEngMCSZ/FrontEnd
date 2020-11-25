@@ -26,7 +26,7 @@ export default class SignIn extends React.Component {
         this.state = {
             username : '',
             password : '',
-            choiceID : '',
+            id : '',
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -35,9 +35,9 @@ export default class SignIn extends React.Component {
     }
 
     componentDidMount () {
-        if (this.props.match.params.choiceID != null) {
+        if (this.props.match.params.id != null) {
             const { match: {params}} = this.props;
-            this.setState({choiceID : params.choiceID})
+            this.setState({id : params.id})
         }
     }
 
@@ -46,62 +46,65 @@ export default class SignIn extends React.Component {
     }
 
     signIn = async (e) => {
-        let body = {
-            choiceID : this.state.choiceID,
-            username : this.state.username,
-            password : this.state.password
-        }
+        
+        let url = '';
 
+        if (this.state.password === ''){
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password=""`;
+        } else {
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password="${this.state.password}"`
+        }
+        let response2 = '';
         const response = await axios({
             method: 'GET',
-            url: `/choice/login`,
-            body: JSON.stringify(body)
+            url: url
         });
 
-        if (response.code === 200) {
-            const response2 = await axios({
+        if (response.data.statusCode === 200) {
+
+            response2 = await axios({
                 method: 'GET',
-                auth : {
-                    username : this.state.username,
-                    password : this.state.password
-                },
-                url : `/choice/${this.state.choiceID}`
+                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}?authentication="${response.data.body}"`
             });
 
-            this.props.updateChoice(response2);
+            let thechoice = JSON.parse(response2.data.body);
+        
+            this.props.updateChoice(thechoice);
             this.props.updateUser({username :  this.state.username, password : this.state.password});
 
-            <Redirect to={`/choice/${this.state.choiceID}/view`}/>
+            this.props.history.push(`/choice/${thechoice.id}/view`);
         }
     }
 
     signUp = async (e) => {
-        let body = {
-            choiceID : this.state.choiceID,
-            username : this.state.username,
-            password : this.state.password
-        }
+        let url = '';
 
+        if (this.state.password === ''){
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password=""`;
+        } else {
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password="${this.state.password}"`
+        }
+        let response2 = '';
         const response = await axios({
             method: 'POST',
-            url: `/choice/login`,
-            body: JSON.stringify(body)
+            url: url
         });
 
-        if (response.code === 200) {
-            const response2 = await axios({
+        if (response.data.statusCode === 200) {
+
+            response2 = await axios({
                 method: 'GET',
-                auth : {
-                    username : this.state.username,
-                    password : this.state.password
-                },
-                url : `/choice/${this.state.choiceID}`
+                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}?authentication="${response.data.body}"`
             });
 
-            this.props.updateChoice(response2);
+            let thechoice = JSON.parse(response2.data.body);
+            
+            this.props.updateChoice(thechoice);
+            this.props.updateUser({username :  this.state.username, password : this.state.password});
 
-            <Redirect to={`/choice/${this.state.choiceID}/view`}/>
+            this.props.history.push(`/choice/${thechoice.id}/view`);
         }
+
     }
 
     render() {
@@ -133,16 +136,16 @@ export default class SignIn extends React.Component {
                                 label='Choice Code' 
                                 name='choiceID'
                                 InputLabelProps={{shrink: true}}
-                                value={this.state.choiceID}
+                                value={this.state.id}
                                 onChange={this.handleChange}
                                 ></TextField>
                     </Grid>
                     <Grid container item xs direction='row'>
                         <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
-                            <Button variant='contained'>Sign In</Button>
+                            <Button variant='contained' onClick={this.signIn}>Sign In</Button>
                         </Grid>
                         <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
-                            <Button variant='contained'>Sign Up</Button>
+                            <Button variant='contained' onClick={this.signUp}>Sign Up</Button>
                         </Grid>
                     </Grid>
                 </Grid>

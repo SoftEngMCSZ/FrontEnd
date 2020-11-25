@@ -34,9 +34,9 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       choice : {
-        choiceID: 'ABCDEFG',
+        id: 'ABCDEFG',
         question: 'What should we get for lunch BUT IN APP?',
-        finalDecision: {},
+        selectedAlternative: {},
         alternatives: [
             {alternativeID: 'ABC123', 
             contents: 'Habachi',
@@ -57,14 +57,14 @@ export default class App extends React.Component {
             feedback: [{author: 'Bobby',
                         content: 'McDonalds clearly superior',
                         timestamp: '11-11-2020'}]}            ],
-        maxCollabs: 0,
+        maxCollaborators: 0,
         collaborators: []
       },
       currentUser : {}
     }
 
     this.updateChoice = this.updateChoice.bind(this);
-    this.updateUser = this.updateUser(this);
+    this.updateUser = this.updateUser.bind(this);
 
   }
 
@@ -86,7 +86,7 @@ export default class App extends React.Component {
                 WhatDo?
               </Typography>
               <Grid container spacing={1}>
-                <Grid item xs={12} xs container direction='row'>
+                <Grid item xs={12} container direction='row'>
                   <Button color="inherit" component={Link} to='/'>Home</Button>
                   <Button color="inherit" component={Link} to='/create'>Create</Button>
                 </Grid>
@@ -98,8 +98,8 @@ export default class App extends React.Component {
         <div>
           <Switch>
             <Route path="/create" render={(props) => (<Create {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
-            <Route path='/choice/:choiceID/view' render={(props) => (<Choice {...props} choice={this.state.choice} user={this.state.user} updateChoice={this.updateChoice}/>)}/>
-            <Route path="/choice/:choiceID" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
+            <Route path='/choice/:id/view' render={(props) => (<Choice {...props} choice={this.state.choice} user={this.state.user} updateChoice={this.updateChoice}/>)}/>
+            <Route path="/choice/:id" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
             <Route path="/choice" component={Choice} />
             <Route path='/admin' component={Admin} />
             <Route path="/" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)}/>

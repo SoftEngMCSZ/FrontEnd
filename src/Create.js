@@ -57,67 +57,52 @@ export default class Create extends React.Component {
             
         choice.alternatives = this.state.alternatives.filter(alt => alt.contents != '');
 
-        let test = {
-            "question": "Hello Worl",
-            "alternatives": [
-                     { "alternativeID": "a0be58cf-74c2-4a66-9c22-8f3dd97a4da7", 
-                     "contents": "Habachi",
-                     "approvals": [],
-                     "disapprovals": [],
-                     "feedback": []},
-                     { "alternativeID": "93dd797f-6e1b-43b0-85b1-82f047e77014", 
-                     "contents": "McDonalds. I cant believe you made me add hibachi Jimmy.",
-                     "approvals": [],
-                     "disapprovals": [],
-                     "feedback": []}],
-             "maxCollaborators": 1
-         }
-
-
-         console.log(test);
-
         try {
-            const response = await axios({
+            const response2 = await axios({
                 method: 'POST',
                 url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/make`,
-                body: test
+                data: JSON.stringify(choice)
             });
+   
 
-            // const response = await fetch(`https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/make`, {
-            //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            //     body: JSON.stringify(data) // body data type must match "Content-Type" header
-            //   });
-            //   //return response.json(); // parses JSON response into native JavaScript objects
-            // }
+        let response = JSON.parse(response2.data.body);
 
-        console.log('got response');
-        console.log(response);
-        
         this.props.updateChoice(response);
 
-        this.props.history.push(`/choice/${this.state.choiceID}/view`);
-        console.log('redirect failed');
+        console.log(response);
+
+        let url = '';
+
+        if (this.state.password === ''){
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username="${this.state.username}"&password=""`;
+        } else {
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username="${this.state.username}"&password="${this.state.password}"`
+        }
+
+        let response3 = '';
+        const response4 = await axios({
+            method: 'POST',
+            url: url
+        });
+
+        if (response4.data.statusCode === 200) {
+            console.log("gets here");
+            response3 = await axios({
+                method: 'GET',
+                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}?authentication="${response4.data.body}"`
+            });
+
+            let thechoice = JSON.parse(response3.data.body);
+        
+            this.props.updateChoice(thechoice);
+            this.props.updateUser({username :  this.state.username, password : this.state.password});
+
+            this.props.history.push(`/choice/${thechoice.id}/view`);
+        }
 
         } catch (err) {
             console.log(err);
         }
-
-        // let body = {
-        //     choiceID : this.state.choiceID,
-        //     username : this.state.username,
-        //     password : this.state.password
-        // }
-
-        // const response2 = await axios({
-        //     method: 'POST',
-        //     url: `/choice/login`,
-        //     body: JSON.stringify(body)
-        // });
-
-        // if (response2.code === 200) {
-        //     this.updateUser({username : this.state.username, password : this.state.password});
-            
-        // }
     }
   
     addAlternative = (e) => {

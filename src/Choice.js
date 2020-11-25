@@ -62,13 +62,13 @@ export default class Choice extends React.Component {
     componentDidMount(){
         const { match: {params}} = this.props;
         if (this.props.choice !== null) {
-            if (this.props.choice.choiceID !== params.choiceID) {
-                this.props.history.push(`/choice/${params.choiceID}`);
-            }
-            this.setState({choice : this.props.choice});
+            // if (this.props.choice.id !== params.id) {
+            //     this.props.history.push(`/choice/${params.id}`);
+            // }
+            this.setState({choice : this.params});
             this.setState({user : this.props.user});
         } else {
-            this.props.history.push(`/choice/${params.choiceID}`);
+            this.props.history.push(`/choice/${params.id}`);
         }
      }
 
@@ -79,24 +79,24 @@ export default class Choice extends React.Component {
     updateDisapproval = (e) => {}
 
     showFeedback = (e) => {
-        return ( <Feedback alternative={this.state.alternatives[e.target.id]}/> );
+        return ( <Feedback alternative={this.props.alternatives[e.target.id]}/> );
     }
 
     render() {
-        let alts = this.state.choice.alternatives;
+        let alts = this.props.choice.alternatives
         return (
         <ThemeProvider theme={theme}>
             <Container maxWidth='sm'>
             <Grid container spacing={1} direction='column'>
                 <Grid container xs={12} direction='row' align-content-xs-center justify='center' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
                     <Typography variant='h5'>What should we do about...</Typography>
-                    <Typography variant='h4'>{this.state.choice.question}</Typography>
-                    <Typography variant='overline'>{`Choice Code: ${this.state.choice.choiceID}`}</Typography>
+                    <Typography variant='h4'>{this.props.choice.question}</Typography>
+                    <Typography variant='overline'>{`Choice Code: ${this.props.choice.id}`}</Typography>
                 </Grid>
                 <Grid item xs direction='row'>
                     {alts.map((alt, idx) => {
                         return (
-                            <Alternative data={alt} id={idx} user={this.state.user} updateChoice={this.props.updateChoice}/>
+                            <Alternative data={alt} id={idx} user={this.props.user} updateChoice={this.props.updateChoice}/>
                         );
                     })}
                 </Grid>
