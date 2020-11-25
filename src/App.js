@@ -97,7 +97,7 @@ export default class App extends React.Component {
 
         <div>
           <Switch>
-            <Route path="/create" component={Create} />
+            <Route path="/create" render={(props) => (<Create {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
             <Route path='/choice/:choiceID/view' render={(props) => (<Choice {...props} choice={this.state.choice} user={this.state.user} updateChoice={this.updateChoice}/>)}/>
             <Route path="/choice/:choiceID" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
             <Route path="/choice" component={Choice} />

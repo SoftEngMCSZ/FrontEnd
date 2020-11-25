@@ -43,34 +43,64 @@ export default class Create extends React.Component {
     componentWillUnmount(){}
 
     createChoice = async (event) => {
-        console.log('creating choice...');
+
         const choice = { question : this.state.question,
                          alternatives : this.state.alternatives,
-                         maxCollabs : this.state.maxCollabs}
+                         maxCollaborators : this.state.maxCollabs}
         if (choice.question === '' 
-            || choice.maxCollabs === 0
+            || choice.maxCollaborators === 0
             || choice.alternatives[0].contents === ''
             || choice.alternatives[1].contents === '') { 
-                console.log('missing required fields');
+                console.log('Error: missing required fields');
                 return; }
+
             
         choice.alternatives = this.state.alternatives.filter(alt => alt.contents != '');
 
-        console.log('filter alternatives');
+        let test = {
+            "question": "Hello Worl",
+            "alternatives": [
+                     { "alternativeID": "a0be58cf-74c2-4a66-9c22-8f3dd97a4da7", 
+                     "contents": "Habachi",
+                     "approvals": [],
+                     "disapprovals": [],
+                     "feedback": []},
+                     { "alternativeID": "93dd797f-6e1b-43b0-85b1-82f047e77014", 
+                     "contents": "McDonalds. I cant believe you made me add hibachi Jimmy.",
+                     "approvals": [],
+                     "disapprovals": [],
+                     "feedback": []}],
+             "maxCollaborators": 1
+         }
 
-        const response = await axios({
-            method: 'POST',
-            url: `arn:aws:execute-api:us-east-1:632205971582:p7tv9et8m8/*/POST/choice/make`,
-            body: JSON.stringify(choice)
-        });
+
+         console.log(test);
+
+        try {
+            const response = await axios({
+                method: 'POST',
+                url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/make`,
+                body: test
+            });
+
+            // const response = await fetch(`https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/make`, {
+            //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            //     body: JSON.stringify(data) // body data type must match "Content-Type" header
+            //   });
+            //   //return response.json(); // parses JSON response into native JavaScript objects
+            // }
 
         console.log('got response');
         console.log(response);
         
-        this.updateChoice(response);
+        this.props.updateChoice(response);
 
         this.props.history.push(`/choice/${this.state.choiceID}/view`);
         console.log('redirect failed');
+
+        } catch (err) {
+            console.log(err);
+        }
 
         // let body = {
         //     choiceID : this.state.choiceID,
