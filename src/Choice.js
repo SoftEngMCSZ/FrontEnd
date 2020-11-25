@@ -24,7 +24,7 @@ export default class Choice extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            user : {username: 'charlotte', password},
+            user : {username: 'charlotte', password:''},
             choice : {
                 choiceID: 'ABCDEFG',
                 question: 'What should we get for lunch?',
