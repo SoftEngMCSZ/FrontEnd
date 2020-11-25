@@ -74,9 +74,9 @@ export default class Create extends React.Component {
         let url = '';
 
         if (this.state.password === ''){
-            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username="${this.state.username}"&password=""`;
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username=${this.state.username}`;
         } else {
-            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username="${this.state.username}"&password="${this.state.password}"`
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username=${this.state.username}&password=${this.state.password}`
         }
 
         let response3 = '';
@@ -86,10 +86,9 @@ export default class Create extends React.Component {
         });
 
         if (response4.data.statusCode === 200) {
-            console.log("gets here");
             response3 = await axios({
                 method: 'GET',
-                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}?authentication="${response4.data.body}"`
+                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}?authentication=${response4.data.body}`
             });
 
             let thechoice = JSON.parse(response3.data.body);
@@ -109,7 +108,7 @@ export default class Create extends React.Component {
         if (this.state.alternatives.length < 5) {
             let uuid = uuidv4();
             this.setState((prevState) => ({
-                alternatives:[...prevState.alternatives, {alternativeID: {uuid}, contents: '', approvals: [], disapprovals: [], feedback: []}],
+                alternatives:[...prevState.alternatives, {alternativeID: uuid, contents: '', approvals: [], disapprovals: [], feedback: []}],
             }));
         }
     }

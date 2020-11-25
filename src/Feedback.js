@@ -29,7 +29,7 @@ export default class Feedback extends React.Component {
             feedbackID : uuidv4(),
             alternativeID : this.props.data.alternativeID,
             contents : '',
-            author : this.props.user.username,
+            //author : this.props.user.name,
             timestamp : ''
         }
     }

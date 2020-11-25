@@ -50,9 +50,9 @@ export default class SignIn extends React.Component {
         let url = '';
 
         if (this.state.password === ''){
-            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password=""`;
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username=${this.state.username}`;
         } else {
-            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password="${this.state.password}"`
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username=${this.state.username}&password=${this.state.password}`
         }
         let response2 = '';
         const response = await axios({
@@ -64,7 +64,7 @@ export default class SignIn extends React.Component {
 
             response2 = await axios({
                 method: 'GET',
-                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}?authentication="${response.data.body}"`
+                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}?authentication=${response.data.body}`
             });
 
             let thechoice = JSON.parse(response2.data.body);
@@ -80,9 +80,9 @@ export default class SignIn extends React.Component {
         let url = '';
 
         if (this.state.password === ''){
-            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password=""`;
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username=${this.state.username}`;
         } else {
-            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username="${this.state.username}"&password="${this.state.password}"`
+            url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}/login?username=${this.state.username}&password=${this.state.password}`
         }
         let response2 = '';
         const response = await axios({
@@ -94,7 +94,7 @@ export default class SignIn extends React.Component {
 
             response2 = await axios({
                 method: 'GET',
-                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}?authentication="${response.data.body}"`
+                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.state.id}?authentication=${response.data.body}`
             });
 
             let thechoice = JSON.parse(response2.data.body);
@@ -134,7 +134,7 @@ export default class SignIn extends React.Component {
                                 ></TextField>
                         <TextField margin='dense' 
                                 label='Choice Code' 
-                                name='choiceID'
+                                name='id'
                                 InputLabelProps={{shrink: true}}
                                 value={this.state.id}
                                 onChange={this.handleChange}

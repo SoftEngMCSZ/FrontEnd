@@ -83,15 +83,19 @@ export default class Choice extends React.Component {
     }
 
     render() {
-        let alts = this.props.choice.alternatives
+        let alts = this.props.choice.alternatives;
         return (
         <ThemeProvider theme={theme}>
             <Container maxWidth='sm'>
             <Grid container spacing={1} direction='column'>
-                <Grid container xs={12} direction='row' align-content-xs-center justify='center' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
-                    <Typography variant='h5'>What should we do about...</Typography>
+                <Grid container xs direction='row' align-content-xs-center justify='center' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
+                    <Grid container item xs={12} justify='center'>
+                        <Typography variant='h5'>What should we do about...</Typography>
+                    </Grid>
                     <Typography variant='h4'>{this.props.choice.question}</Typography>
-                    <Typography variant='overline'>{`Choice Code: ${this.props.choice.id}`}</Typography>
+                    <Grid container item xs={12} justify='center'>
+                        <Typography variant='overline'>{`Choice Code: ${this.props.choice.id}`}</Typography>
+                    </Grid>
                 </Grid>
                 <Grid item xs direction='row'>
                     {alts.map((alt, idx) => {

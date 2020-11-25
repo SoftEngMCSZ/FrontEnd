@@ -89,7 +89,8 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'approval',
                         actionType : 'add',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.user.username } 
+                        //collabName: this.props.user.username 
+                    } 
 
         const response = await axios({
             method: 'POST',
@@ -104,7 +105,8 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'disapproval',
                         actionType : 'add',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.user.username } 
+                        //collabName: this.props.user.username
+                     } 
 
         const response = await axios({
             method: 'POST',
@@ -119,7 +121,8 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'approval',
                         actionType : 'remove',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.user.username } 
+                        //collabName: this.props.user.username
+                     } 
 
         const response = await axios({
             method: 'POST',
@@ -134,7 +137,8 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'disapproval',
                         actionType : 'remove',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.user.username } 
+                        //collabName: this.props.user.username
+                     } 
 
         const response = await axios({
             method: 'POST',
