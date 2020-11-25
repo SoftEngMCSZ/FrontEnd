@@ -33,39 +33,47 @@ export default class App extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      choice : {choiceID: 'ABCDEFG',
-      question: 'What should we get for lunch BUT IN APP?',
-      finalDecision: {},
-      alternatives: [
-          {alternativeID: 'ABC123', 
-          contents: 'Habachi',
-          approvals: [{name: 'Jimmy'}],
-          disapprovals: [{name: 'Bobby'},
-                          {name: 'Lucy'}],
-          feedback: [{author: 'Bobby',
-                      content: 'Habachi sux',
-                      timestamp: '11-11-2020'},
-                      {author: 'Miranda C.',
-                      content: 'What is wrong with you. Hibachi is excellent. We should totally go.',
-                      timestamp: '11-12-2020'}]},
-          {alternativeID: 'ABC789', 
-          contents: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
-          approvals: [{name: 'Bobby'}],
-          disapprovals: [{name: 'Jimmy'},
-                          {name: 'Lucy'}],
-          feedback: [{author: 'Bobby',
-                      content: 'McDonalds clearly superior',
-                      timestamp: '11-11-2020'}]}            ],
-      maxCollabs: 0,
-      collaborators: []}
+      choice : {
+        choiceID: 'ABCDEFG',
+        question: 'What should we get for lunch BUT IN APP?',
+        finalDecision: {},
+        alternatives: [
+            {alternativeID: 'ABC123', 
+            contents: 'Habachi',
+            approvals: [{name: 'Jimmy'}],
+            disapprovals: [{name: 'Bobby'},
+                            {name: 'Lucy'}],
+            feedback: [{author: 'Bobby',
+                        content: 'Habachi sux',
+                        timestamp: '11-11-2020'},
+                        {author: 'Miranda C.',
+                        content: 'What is wrong with you. Hibachi is excellent. We should totally go.',
+                        timestamp: '11-12-2020'}]},
+            {alternativeID: 'ABC789', 
+            contents: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
+            approvals: [{name: 'Bobby'}],
+            disapprovals: [{name: 'Jimmy'},
+                            {name: 'Lucy'}],
+            feedback: [{author: 'Bobby',
+                        content: 'McDonalds clearly superior',
+                        timestamp: '11-11-2020'}]}            ],
+        maxCollabs: 0,
+        collaborators: []
+      },
+      currentUser : {}
     }
 
     this.updateChoice = this.updateChoice.bind(this);
+    this.updateUser = this.updateUser(this);
 
   }
 
   updateChoice = (response) => {
     this.setState({ choice : response });
+  }
+
+  updateUser = (auth) => {
+    this.setState({currentUser : auth });
   }
   
   render() {
@@ -90,11 +98,11 @@ export default class App extends React.Component {
         <div>
           <Switch>
             <Route path="/create" component={Create} />
-            <Route path='/choice/:choiceID/view' render={(props) => (<Choice {...props} choice={this.state.choice} updateChoice={this.updateChoice}/>)}/>
-            <Route path="/choice/:choiceID" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice}/>)} />
+            <Route path='/choice/:choiceID/view' render={(props) => (<Choice {...props} choice={this.state.choice} user={this.state.user} updateChoice={this.updateChoice}/>)}/>
+            <Route path="/choice/:choiceID" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
             <Route path="/choice" component={Choice} />
             <Route path='/admin' component={Admin} />
-            <Route path="/" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice}/>)}/>
+            <Route path="/" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)}/>
           </Switch>
         </div>
       </Router>

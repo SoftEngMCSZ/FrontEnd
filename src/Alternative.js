@@ -89,7 +89,7 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'approval',
                         actionType : 'add',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.currentUser.name } 
+                        collabName: this.props.user.username } 
 
         const response = await axios({
             method: 'POST',
@@ -104,7 +104,7 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'disapproval',
                         actionType : 'add',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.currentUser.name } 
+                        collabName: this.props.user.username } 
 
         const response = await axios({
             method: 'POST',
@@ -119,7 +119,7 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'approval',
                         actionType : 'remove',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.currentUser.name } 
+                        collabName: this.props.user.username } 
 
         const response = await axios({
             method: 'POST',
@@ -134,7 +134,7 @@ export default class Alternative extends React.Component {
         const body = { opinionType : 'disapproval',
                         actionType : 'remove',
                         alternativeID : this.props.data.alternativeID,
-                        collabName: this.props.currentUser.name } 
+                        collabName: this.props.user.username } 
 
         const response = await axios({
             method: 'POST',
@@ -166,7 +166,7 @@ export default class Alternative extends React.Component {
                 </Grid>
                 <Grid container item direction='row'>
                     <Grid container xs justify='center'>
-                        <Tooltip title={`Liked by: ${alt.approvals.map((approval, idx) => {return approval.name})} `}>
+                        <Tooltip title={`Liked by: ${alt.approvals.map((approval, idx) => {return approval.username})} `}>
                             <IconButton className='approvals' id={altId} onClick={this.updateApproval}>
                                 <ThumbUpRounded 
                                     color={this.state.liked}
@@ -175,7 +175,7 @@ export default class Alternative extends React.Component {
                         </Tooltip>
                     </Grid>
                     <Grid container xs justify='center'>
-                        <Tooltip title={`Disliked by: ${alt.disapprovals.map((disapproval, idx) => {return ' ' + disapproval.name})}`}>
+                        <Tooltip title={`Disliked by: ${alt.disapprovals.map((disapproval, idx) => {return ' ' + disapproval.username})}`}>
                             <IconButton className='disapprovals' id={altId} onClick={this.updateDisapproval}>
                                 <ThumbDownRounded 
                                     color={this.state.disliked}
@@ -193,7 +193,7 @@ export default class Alternative extends React.Component {
                     </Grid>
                 </Grid>
                  { this.state.viewFeedback
-                    ? <Feedback data={alt} currentUser={this.props.currentUser} updateChoice={this.props.updateChoice}/>
+                    ? <Feedback data={alt} user={this.props.user} updateChoice={this.props.updateChoice}/>
                     : null
                 }
             </Grid>

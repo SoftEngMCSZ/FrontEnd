@@ -43,6 +43,7 @@ export default class Create extends React.Component {
     componentWillUnmount(){}
 
     createChoice = async (event) => {
+        console.log('creating choice...');
         const choice = { question : this.state.question,
                          alternatives : this.state.alternatives,
                          maxCollabs : this.state.maxCollabs}
@@ -50,17 +51,43 @@ export default class Create extends React.Component {
             || choice.maxCollabs === 0
             || choice.alternatives[0].contents === ''
             || choice.alternatives[1].contents === '') { 
+                console.log('missing required fields');
                 return; }
             
         choice.alternatives = this.state.alternatives.filter(alt => alt.contents != '');
 
+        console.log('filter alternatives');
+
         const response = await axios({
             method: 'POST',
-            url: `/choice/make`,
+            url: `arn:aws:execute-api:us-east-1:632205971582:p7tv9et8m8/*/POST/choice/make`,
             body: JSON.stringify(choice)
         });
-        
+
+        console.log('got response');
         console.log(response);
+        
+        this.updateChoice(response);
+
+        this.props.history.push(`/choice/${this.state.choiceID}/view`);
+        console.log('redirect failed');
+
+        // let body = {
+        //     choiceID : this.state.choiceID,
+        //     username : this.state.username,
+        //     password : this.state.password
+        // }
+
+        // const response2 = await axios({
+        //     method: 'POST',
+        //     url: `/choice/login`,
+        //     body: JSON.stringify(body)
+        // });
+
+        // if (response2.code === 200) {
+        //     this.updateUser({username : this.state.username, password : this.state.password});
+            
+        // }
     }
   
     addAlternative = (e) => {
@@ -142,10 +169,10 @@ export default class Create extends React.Component {
                           value={this.state.maxCollabs}
                           onChange={this.handleChange}>
                     <MenuItem value=''><em>Select</em></MenuItem>
-                    <MenuItem value={2}>Two</MenuItem>
-                    <MenuItem value={3}>Three</MenuItem>
-                    <MenuItem value={4}>Four</MenuItem>
-                    <MenuItem value={5}>Five</MenuItem>
+                    <MenuItem value={2}>One</MenuItem>
+                    <MenuItem value={3}>Two</MenuItem>
+                    <MenuItem value={4}>Three</MenuItem>
+                    <MenuItem value={5}>Four</MenuItem>
                   </Select>
                   <FormHelperText>How many people you can invite</FormHelperText>
                 </FormControl>

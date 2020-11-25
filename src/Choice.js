@@ -3,7 +3,6 @@ import axios from 'axios';
 import {createMuiTheme, ThemeProvider, Container, Grid, Typography} from '@material-ui/core';
 import Feedback from './Feedback.js'
 import Alternative from './Alternative.js'
-import { Redirect } from 'react-router-dom'
 
 const theme = createMuiTheme({
     spacing: 8,
@@ -25,7 +24,7 @@ export default class Choice extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            user : {name: 'charlotte'},
+            user : {username: 'charlotte', password},
             choice : {
                 choiceID: 'ABCDEFG',
                 question: 'What should we get for lunch?',
@@ -33,9 +32,9 @@ export default class Choice extends React.Component {
                 alternatives: [
                     {alternativeID: 'ABC123', 
                     contents: 'Habachi',
-                    approvals: [{name: 'Jimmy'}],
-                    disapprovals: [{name: 'Bobby'},
-                                    {name: 'Lucy'}],
+                    approvals: [{username: 'Jimmy'}],
+                    disapprovals: [{username: 'Bobby'},
+                                    {username: 'Lucy'}],
                     feedback: [{author: 'Bobby',
                                 content: 'Habachi sux',
                                 timestamp: '11-11-2020'},
@@ -44,9 +43,9 @@ export default class Choice extends React.Component {
                                 timestamp: '11-12-2020'}]},
                     {alternativeID: 'ABC789', 
                     contents: 'McDonalds. I cant believe you made me add hibachi Jimmy.',
-                    approvals: [{name: 'Bobby'}],
-                    disapprovals: [{name: 'Jimmy'},
-                                    {name: 'Lucy'}],
+                    approvals: [{username: 'Bobby'}],
+                    disapprovals: [{username: 'Jimmy'},
+                                    {username: 'Lucy'}],
                     feedback: [{author: 'Bobby',
                                 content: 'McDonalds clearly superior',
                                 timestamp: '11-11-2020'}]}            ],
@@ -67,6 +66,7 @@ export default class Choice extends React.Component {
                 this.props.history.push(`/choice/${params.choiceID}`);
             }
             this.setState({choice : this.props.choice});
+            this.setState({user : this.props.user});
         } else {
             this.props.history.push(`/choice/${params.choiceID}`);
         }
@@ -96,7 +96,7 @@ export default class Choice extends React.Component {
                 <Grid item xs direction='row'>
                     {alts.map((alt, idx) => {
                         return (
-                            <Alternative data={alt} id={idx} currentUser={this.state.user} updateChoice={this.props.updateChoice}/>
+                            <Alternative data={alt} id={idx} user={this.state.user} updateChoice={this.props.updateChoice}/>
                         );
                     })}
                 </Grid>

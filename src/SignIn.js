@@ -69,6 +69,7 @@ export default class SignIn extends React.Component {
             });
 
             this.props.updateChoice(response2);
+            this.props.updateUser({username :  this.state.username, password : this.state.password});
 
             <Redirect to={`/choice/${this.state.choiceID}/view`}/>
         }
