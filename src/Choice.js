@@ -61,11 +61,11 @@ export default class Choice extends React.Component {
 
     componentDidMount(){
         const { match: {params}} = this.props;
-        if (this.props.choice !== null) {
+        if (params.id == this.props.choice.id) {
             // if (this.props.choice.id !== params.id) {
             //     this.props.history.push(`/choice/${params.id}`);
             // }
-            this.setState({choice : this.params});
+            this.setState({choice : this.props.choice});
             this.setState({user : this.props.user});
         } else {
             this.props.history.push(`/choice/${params.id}`);
