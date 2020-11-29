@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {createMuiTheme, ThemeProvider, Container, Grid, Paper, InputLabel, MenuItem, FormHelperText, FormControl, TextField, Button, Select} from '@material-ui/core';
+import {createMuiTheme, ThemeProvider, Container, Grid, Paper, InputLabel, Typography, MenuItem, FormHelperText, FormControl, TextField, Button, Select} from '@material-ui/core';
 import { v4 as uuidv4} from 'uuid';
 
 const theme = createMuiTheme({
@@ -19,19 +19,18 @@ const theme = createMuiTheme({
     }
 });
 
-let uuid1 = uuidv4();
-let uuid2 = uuidv4();
-
 export default class Create extends React.Component {
     constructor(props) {
       super(props)
+
       this.state = {
         question: '',
-        alternatives: [{alternativeID: uuid1, contents: '', approvals: [], disapprovals: [], feedback: []},
-                       {alternativeID: uuid2, contents: '', approvals: [], disapprovals: [], feedback: []}],
+        alternatives: [{alternativeID: '', contents: '', approvals: [], disapprovals: [], feedback: []},
+                       {alternativeID: '', contents: '', approvals: [], disapprovals: [], feedback: []}],
         maxCollabs: 0,
         username : '',
-        password : ''
+        password : '',
+        badInput : false
       }
   
       this.handleChange= this.handleChange.bind(this);
@@ -44,6 +43,9 @@ export default class Create extends React.Component {
 
     createChoice = async (event) => {
 
+        this.state.alternatives[0].alternativeID = uuidv4();
+        this.state.alternatives[1].alternativeID = uuidv4();
+
         const choice = { question : this.state.question,
                          alternatives : this.state.alternatives,
                          maxCollaborators : this.state.maxCollabs}
@@ -51,7 +53,7 @@ export default class Create extends React.Component {
             || choice.maxCollaborators === 0
             || choice.alternatives[0].contents === ''
             || choice.alternatives[1].contents === '') { 
-                console.log('Error: missing required fields');
+                this.setState({badInput : true});
                 return; }
 
             
@@ -225,8 +227,14 @@ export default class Create extends React.Component {
               <Grid item xs={12} container direction='row-reverse'>
                 <Button size='small' onClick={this.addAlternative}>+ Add Alternative</Button>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={3}>
                 <Button size='large' variant='contained' onClick={this.createChoice}>Create</Button>
+              </Grid>
+              <Grid item xs={9} justify='flex-start'>
+                    { this.state.badInput
+                        ? <Typography variant='caption'>Missing required fields</Typography>
+                        : null
+                    }
               </Grid>
             </Grid>
           </Container>

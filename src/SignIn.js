@@ -27,6 +27,8 @@ export default class SignIn extends React.Component {
             username : '',
             password : '',
             id : '',
+            badRegister : false,
+            badLogin : false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -73,6 +75,8 @@ export default class SignIn extends React.Component {
             this.props.updateUser({username :  this.state.username, password : this.state.password});
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
+        } else {
+            this.setState({badLogin : true});
         }
     }
 
@@ -103,6 +107,8 @@ export default class SignIn extends React.Component {
             this.props.updateUser({username :  this.state.username, password : this.state.password});
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
+        } else {
+            this.setState({badRegister : true});
         }
 
     }
@@ -140,13 +146,23 @@ export default class SignIn extends React.Component {
                                 onChange={this.handleChange}
                                 ></TextField>
                     </Grid>
-                    <Grid container item xs direction='row'>
+                    <Grid container item xs direction='row' alignItems='center' justify='center'>
                         <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
-                            <Button variant='contained' onClick={this.signIn}>Sign In</Button>
+                            <Button variant='contained' onClick={this.signIn}>Login</Button>
                         </Grid>
-                        <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
-                            <Button variant='contained' onClick={this.signUp}>Sign Up</Button>
+                        <Grid container item xs alignItems='center' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}} >
+                            <Button variant='contained' onClick={this.signUp}>Register</Button>
                         </Grid>
+                    </Grid>
+                    <Grid container item xs alignItems='center' wrap='nowrap' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}} >
+                            { this.state.badRegister
+                                ? <Typography variant='caption'>User already registered.</Typography>
+                                : null
+                            }
+                            { this.state.badLogin
+                                ? <Typography variant='caption'>Username or password is not correct.</Typography>
+                                : null
+                            }
                     </Grid>
                 </Grid>
             </Paper>
