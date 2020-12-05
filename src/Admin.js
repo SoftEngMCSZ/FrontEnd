@@ -24,8 +24,7 @@ export default class Admin extends React.Component {
         super(props);
 
         this.state = {
-            choices : [ { id : 'ABCDEFG', creationTime : 'May 5th 2020',  isCompleted : 'true'},
-                        { id : 'HIJKLMNOP', creationTime : 'Aug 5th 2020',  isCompleted : 'false'}]
+            choices : []
         }
 
         this.retrieveChoices.bind(this);
@@ -86,7 +85,7 @@ export default class Admin extends React.Component {
                             <Button
                                 variant='contained'
                                 size='small'>
-                                Save</Button>
+                                Delete</Button>
                         </Grid>
                     </Grid>
                     <Grid container item xs>

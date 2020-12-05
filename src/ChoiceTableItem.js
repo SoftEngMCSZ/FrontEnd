@@ -17,6 +17,15 @@ const theme = createMuiTheme({
     }
 });
 
+function completed(bool) {
+    if (bool) {
+        return "Completed";
+    }
+    else {
+        return "Incomplete";
+    }
+}
+
 export default class ChoiceTableItem extends React.Component {
     constructor(props){
         super(props);
@@ -28,22 +37,17 @@ export default class ChoiceTableItem extends React.Component {
         return (
             <ThemeProvider theme={theme}>
                 <Paper elevation={2}>
-                    <Grid container item xs direction='row' alignItems='center' justify='space-between' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(1)}}>
-                        <Typography variant='h6'>{choice.id}</Typography>
-                        <Typography variant='h6'>{choice.creationTime}</Typography>
-                        <Typography variant='h6'>{completed(choice.isCompleted)}</Typography>
+                    <Grid container xs direction='column' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(1)}}>
+                        <Grid container item xs direction='row' alignItems='center' justify='flex-start'>
+                            <Typography variant='h6'>{choice.id}</Typography>
+                        </Grid>
+                        <Grid container item xs direction='row' alignItems='center' justify='space-between'>
+                            <Typography variant='body1'>{choice.creationTime}</Typography>
+                            <Typography variant='body1'>{completed(choice.isCompleted)}</Typography>
+                        </Grid>
                     </Grid>
                 </Paper>
             </ThemeProvider>
         );
-    }
-}
-
-function completed(bool) {
-    if (bool) {
-        return "Completed";
-    }
-    else {
-        return "Incomplete";
     }
 }
