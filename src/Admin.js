@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container, Grid, Button, TextField, Typography, ThemeProvider, createMuiTheme} from '@material-ui/core'
 import ChoiceTableItem from './ChoiceTableItem.js'
+import axios from 'axios';
 
 const theme = createMuiTheme({
     spacing: 8,
@@ -23,9 +24,28 @@ export default class Admin extends React.Component {
         super(props);
 
         this.state = {
-            choices : [ { question : 'Best dog?'},
-                        { question : 'What should we get for lunch?'}]
+            choices : [ { choiceID : 'ABCDEFG', creationDate : 'May 5th 2020',  completed : 'true'},
+                        { choiceID : 'HIJKLMNOP', creationDate : 'Aug 5th 2020',  completed : 'false'}]
         }
+    }
+
+    async componentDidMount() {
+        let body = {} // what you need to send, as a dictionary
+
+        const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/`, // the endpoint url
+            data: JSON.stringify(body)
+        });
+
+        let choicesToList = JSON.parse(response.data.body)
+
+        console.log(choicesToList);
+
+        this.setState({choices : choicesToList})
     }
 
     render() {
