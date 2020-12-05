@@ -24,8 +24,8 @@ export default class Admin extends React.Component {
         super(props);
 
         this.state = {
-            choices : [ { choiceID : 'ABCDEFG', creationDate : 'May 5th 2020',  completed : 'true'},
-                        { choiceID : 'HIJKLMNOP', creationDate : 'Aug 5th 2020',  completed : 'false'}]
+            choices : [ { id : 'ABCDEFG', creationTime : 'May 5th 2020',  isCompleted : 'true'},
+                        { id : 'HIJKLMNOP', creationTime : 'Aug 5th 2020',  isCompleted : 'false'}]
         }
 
         this.retrieveChoices.bind(this);
@@ -42,20 +42,20 @@ export default class Admin extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            method: 'POST',
-            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/`, // the endpoint url
+            method: 'GET',
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/admin`, // the endpoint url
             data: JSON.stringify(body)
         });
 
-        let choicesToList = JSON.parse(response.data.body)
 
-        console.log(choicesToList);
+        let choicesToList = Object.values(JSON.parse(response.data.body))[0]
 
         this.setState({choices : choicesToList})
     }
 
     render() {
         let choices = this.state.choices;
+        console.log(choices)
         return (
             <ThemeProvider theme={theme}>
                 <Container maxWidth='sm'>

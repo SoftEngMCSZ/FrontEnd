@@ -29,12 +29,21 @@ export default class ChoiceTableItem extends React.Component {
             <ThemeProvider theme={theme}>
                 <Paper elevation={2}>
                     <Grid container item xs direction='row' alignItems='center' justify='space-between' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(1)}}>
-                        <Typography variant='h6'>{choice.choiceID}</Typography>
-                        <Typography variant='h6'>{choice.creationDate}</Typography>
-                        <Typography variant='h6'>{choice.completed}</Typography>
+                        <Typography variant='h6'>{choice.id}</Typography>
+                        <Typography variant='h6'>{choice.creationTime}</Typography>
+                        <Typography variant='h6'>{completed(choice.isCompleted)}</Typography>
                     </Grid>
                 </Paper>
             </ThemeProvider>
         );
+    }
+}
+
+function completed(bool) {
+    if (bool) {
+        return "Completed";
+    }
+    else {
+        return "Incomplete";
     }
 }
