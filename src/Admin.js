@@ -27,9 +27,15 @@ export default class Admin extends React.Component {
             choices : [ { choiceID : 'ABCDEFG', creationDate : 'May 5th 2020',  completed : 'true'},
                         { choiceID : 'HIJKLMNOP', creationDate : 'Aug 5th 2020',  completed : 'false'}]
         }
+
+        this.retrieveChoices.bind(this);
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.retrieveChoices();
+    }
+
+    async retrieveChoices() {
         let body = {} // what you need to send, as a dictionary
 
         const response = await axios({
