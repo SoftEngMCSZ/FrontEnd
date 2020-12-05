@@ -61,11 +61,12 @@ export default class Choice extends React.Component {
 
     componentDidMount(){
         const { match: {params}} = this.props;
-        if (params.id == this.props.choice.id) {
+        if (params.id === this.props.choice.id) {
             // if (this.props.choice.id !== params.id) {
             //     this.props.history.push(`/choice/${params.id}`);
             // }
             this.setState({choice : this.props.choice});
+            console.log(this.props.user)
             this.setState({user : this.props.user});
         } else {
             this.props.history.push(`/choice/${params.id}`);
@@ -90,7 +91,7 @@ export default class Choice extends React.Component {
             <Grid container spacing={1} direction='column'>
                 <Grid container xs direction='row' align-content-xs-center justify='center' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
                     <Grid container item xs={12} justify='center'>
-                        <Typography variant='h5'>What should we do about...</Typography>
+                        <Typography variant='h5'>The Question:</Typography>
                     </Grid>
                     <Typography variant='h4'>{this.props.choice.question}</Typography>
                     <Grid container item xs={12} justify='center'>
@@ -98,9 +99,9 @@ export default class Choice extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid item xs direction='row'>
-                    {alts.map((alt, idx) => {
-                        return (
-                            <Alternative data={alt} id={idx} user={this.props.user} updateChoice={this.props.updateChoice}/>
+                    { this.props.choice.alternatives.map((alt, idx) => {
+                        return ( 
+                            <Alternative data={alt} id={idx} choice={this.props.choice} user={this.props.user} updateChoice={this.props.updateChoice}/>
                         );
                     })}
                 </Grid>

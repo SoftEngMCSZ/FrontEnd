@@ -49,6 +49,11 @@ export default class Create extends React.Component {
         const choice = { question : this.state.question,
                          alternatives : this.state.alternatives,
                          maxCollaborators : this.state.maxCollabs}
+        
+        choice.alternatives = this.state.alternatives.filter(alt => alt.contents != '');
+
+        console.log("filtered alternarives");
+
         if (choice.question === '' 
             || choice.maxCollaborators === 0
             || choice.alternatives[0].contents === ''
@@ -56,8 +61,7 @@ export default class Create extends React.Component {
                 this.setState({badInput : true});
                 return; }
 
-            
-        choice.alternatives = this.state.alternatives.filter(alt => alt.contents != '');
+        console.log("minimum criteria met")
 
         try {
             const response2 = await axios({
@@ -71,32 +75,44 @@ export default class Create extends React.Component {
 
         this.props.updateChoice(response);
 
+        console.log("choice updated")
+
         console.log(response);
 
         let url = '';
 
         if (this.state.password === ''){
             url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username=${this.state.username}`;
+            console.log("no password")
         } else {
             url = `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}/login?username=${this.state.username}&password=${this.state.password}`
         }
 
         let response3 = '';
+
         const response4 = await axios({
             method: 'POST',
             url: url
         });
 
-        if (response4.data.statusCode === 200) {
+        console.log("requesting sign in")
+
+        let theuser = JSON.parse(response4.data.body);
+
+        console.log(response4);
+
+        if (response4.data.statusCode === 201) {
             response3 = await axios({
                 method: 'GET',
-                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}?authentication=${response4.data.body}`
+                url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${response.id}?authentication=${theuser.authentication}`
             });
 
             let thechoice = JSON.parse(response3.data.body);
+
+            console.log("choice is updated");
         
             this.props.updateChoice(thechoice);
-            this.props.updateUser({username :  this.state.username, password : this.state.password});
+            this.props.updateUser({username :  this.state.username, password : this.state.password, id : theuser.id});
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
         }

@@ -38,9 +38,7 @@ export default class Alternative extends React.Component {
         this.updateApproval = this.updateApproval.bind(this)
         this.updateDisapproval = this.updateDisapproval.bind(this)
         this.postAddApproval = this.postAddApproval.bind(this)
-        this.postRemoveApproval = this.postRemoveApproval.bind(this)
         this.postAddDisapproval = this.postAddDisapproval.bind(this)
-        this.postRemoveDisapproval = this.postRemoveDisapproval.bind(this)
     }
 
     showFeedback = (e) => {
@@ -60,7 +58,6 @@ export default class Alternative extends React.Component {
 
             if (this.state.disliked === 'primary') {
                 this.setState({disliked : ''});
-                await this.postRemoveDisapproval();
             }
             
         } else {
@@ -76,7 +73,6 @@ export default class Alternative extends React.Component {
 
             if (this.state.liked === 'primary') {
                 this.setState({liked : ''})
-                await this.postRemoveApproval();
             }
             
         } else {
@@ -86,72 +82,100 @@ export default class Alternative extends React.Component {
     }
 
     postAddApproval = async (event) => {
-        const body = { opinionType : 'approval',
+        const body = {  collabId: this.props.user.id,
+                        alternativeId : this.props.data.alternativeID,
+                        opinionType : 'approval',
                         actionType : 'add',
-                        alternativeID : this.props.data.alternativeID,
-                        //collabName: this.props.user.username 
                     } 
 
         const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
-            url: `/choice/opinion`,
-            body: JSON.stringify(body)
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            data: JSON.stringify(body)
         });
-        
-        this.props.updateChoice(response);
+
+        if (response.data.statusCode === 200) {
+            let c = JSON.parse(response.data.body);
+            this.props.updateChoice(c);
+        }
     }
 
     postAddDisapproval = async (event) => {
-        const body = { opinionType : 'disapproval',
+        const body = { collabId: this.props.user.id,
+                        alternativeId : this.props.data.alternativeID,
+                        opinionType : 'disapproval',
                         actionType : 'add',
-                        alternativeID : this.props.data.alternativeID,
-                        //collabName: this.props.user.username
                      } 
 
         const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
-            url: `/choice/opinion`,
-            body: JSON.stringify(body)
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            data: JSON.stringify(body)
         });
         
-        this.props.updateChoice(response);
+        if (response.data.statusCode === 200) {
+            let c = JSON.parse(response.data.body);
+            this.props.updateChoice(c);
+        }
     }
 
     postRemoveApproval = async (event) => {
-        const body = { opinionType : 'approval',
+        const body = {  collabId: this.props.user.id,
+                        alternativeId : this.props.data.alternativeID,
+                        opinionType : 'approval',
                         actionType : 'remove',
-                        alternativeID : this.props.data.alternativeID,
-                        //collabName: this.props.user.username
-                     } 
+                    } 
 
         const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
-            url: `/choice/opinion`,
-            body: JSON.stringify(body)
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            data: JSON.stringify(body)
         });
-        
-        this.props.updateChoice(response);
+
+        if (response.data.statusCode === 200) {
+            let c = JSON.parse(response.data.body);
+            this.props.updateChoice(c);
+        }
     }
 
     postRemoveDisapproval = async (event) => {
-        const body = { opinionType : 'disapproval',
+        const body = { collabId: this.props.user.id,
+                        alternativeId : this.props.data.alternativeID,
+                        opinionType : 'disapproval',
                         actionType : 'remove',
-                        alternativeID : this.props.data.alternativeID,
-                        //collabName: this.props.user.username
                      } 
 
         const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
-            url: `/choice/opinion`,
-            body: JSON.stringify(body)
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            data: JSON.stringify(body)
         });
         
-        this.props.updateChoice(response);
+        if (response.data.statusCode === 200) {
+            let c = JSON.parse(response.data.body);
+            this.props.updateChoice(c);
+        }
     }
 
     render(){
     let altId = this.props.id;
     let alt = this.props.data;
+    
+    let appr = alt.approvals.length
+    let disappr = alt.disapprovals.length
+
     return (
         <ThemeProvider theme={theme}>
         <Grid item xs spacing={2}>
@@ -169,23 +193,25 @@ export default class Alternative extends React.Component {
                     <Typography variant='body1'>{alt.contents}</Typography>
                 </Grid>
                 <Grid container item direction='row'>
-                    <Grid container xs justify='center'>
-                        <Tooltip title={`Liked by: ${alt.approvals.map((approval, idx) => {return approval.username})} `}>
+                    <Grid container xs justify='center' alignItems='center'>
+                        <Tooltip title={`Liked by: ${alt.approvals.map((approval, idx) => {return ' ' + approval.name})} `}>
                             <IconButton className='approvals' id={altId} onClick={this.updateApproval}>
                                 <ThumbUpRounded 
                                     color={this.state.liked}
                                     onClick={this.updateApproval}/>
                             </IconButton>
                         </Tooltip>
+                        <Typography variant='overline'>{`${appr}`}</Typography>
                     </Grid>
-                    <Grid container xs justify='center'>
-                        <Tooltip title={`Disliked by: ${alt.disapprovals.map((disapproval, idx) => {return ' ' + disapproval.username})}`}>
+                    <Grid container xs justify='center' alignItems='center'>
+                        <Tooltip title={`Disliked by: ${alt.disapprovals.map((disapproval, idx) => {return ' ' + disapproval.name})}`}>
                             <IconButton className='disapprovals' id={altId} onClick={this.updateDisapproval}>
                                 <ThumbDownRounded 
                                     color={this.state.disliked}
                                     onClick={this.updateDisapproval}/>
                             </IconButton>
                         </Tooltip>
+                        <Typography variant='overline'>{`${disappr}`}</Typography>
                     </Grid>
                     <Grid container xs justify='center'>
                         <Tooltip title='Feedback'>

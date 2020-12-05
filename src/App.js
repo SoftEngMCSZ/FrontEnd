@@ -70,10 +70,12 @@ export default class App extends React.Component {
 
   updateChoice = (response) => {
     this.setState({ choice : response });
+    console.log("APP " + JSON.stringify(this.state.choice));
   }
 
   updateUser = (auth) => {
     this.setState({currentUser : auth });
+    console.log("APP " + this.state.currentUser);
   }
   
   render() {
@@ -98,7 +100,7 @@ export default class App extends React.Component {
         <div>
           <Switch>
             <Route path="/create" render={(props) => (<Create {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
-            <Route path='/choice/:id/view' render={(props) => (<Choice {...props} choice={this.state.choice} user={this.state.user} updateChoice={this.updateChoice}/>)}/>
+            <Route path='/choice/:id/view' render={(props) => (<Choice {...props} choice={this.state.choice} user={this.state.currentUser} updateChoice={this.updateChoice}/>)}/>
             <Route path="/choice/:id" render={(props) => (<SignIn {...props} updateChoice={this.updateChoice} updateUser={this.updateUser}/>)} />
             <Route path="/choice" component={Choice} />
             <Route path='/admin' component={Admin} />
