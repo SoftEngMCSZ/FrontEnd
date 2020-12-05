@@ -27,7 +27,7 @@ export default class Create extends React.Component {
         question: '',
         alternatives: [{alternativeID: '', contents: '', approvals: [], disapprovals: [], feedback: []},
                        {alternativeID: '', contents: '', approvals: [], disapprovals: [], feedback: []}],
-        maxCollabs: 0,
+        maxCollabs: '',
         username : '',
         password : '',
         badInput : false
@@ -55,7 +55,7 @@ export default class Create extends React.Component {
         console.log("filtered alternarives");
 
         if (choice.question === '' 
-            || choice.maxCollaborators === 0
+            || choice.maxCollaborators === ''
             || choice.alternatives[0].contents === ''
             || choice.alternatives[1].contents === '') { 
                 this.setState({badInput : true});
@@ -191,23 +191,16 @@ export default class Create extends React.Component {
                           onChange={this.handleChange}></TextField>
               </Grid>
               <Grid item xs={6}>
-                <FormControl>
-                  <InputLabel id='select-num-collaborators-label'>Number of Collaborators</InputLabel>
-                  <Select labelId='select-num-collaborators-label'
-                          id='select-num-collaborators'
-                          name='maxCollabs'
+              <TextField label='Number of Collaborators' 
                           className='maxCollabs'
+                          name='maxCollabs'
+                          variant='standard' 
                           margin='dense' 
+                          InputLabelProps={{shrink: true}}
+                          inputProps={{ min: "1", step: "1" }}
+                          type='number'
                           value={this.state.maxCollabs}
-                          onChange={this.handleChange}>
-                    <MenuItem value=''><em>Select</em></MenuItem>
-                    <MenuItem value={2}>One</MenuItem>
-                    <MenuItem value={3}>Two</MenuItem>
-                    <MenuItem value={4}>Three</MenuItem>
-                    <MenuItem value={5}>Four</MenuItem>
-                  </Select>
-                  <FormHelperText>How many people you can invite</FormHelperText>
-                </FormControl>
+                          onChange={this.handleChange}></TextField>
               </Grid>
               { alts.map((val, idx) => {
                 let altDescId = `contents-${idx}`;

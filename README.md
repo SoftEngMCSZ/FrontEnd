@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Creating a Choice
+- To create a choice, first navigate to [CREATE](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/create).
+- You are required to provide a username for yourself, a title for the choice, and the number of people you want to invite.
+- You must also submit at minimum two, and at most five alternatives to choose from.
+Upon clicking `CREATE` you will be redirected to your new choice page. 
+- Your teammates will be able to join the choice from this link, or by entering the choice code displayed. 
 
-## Available Scripts
+## Join a Choice 
+You can join a choice in two ways: 
+### If you have a link to the choice
+1. By following that link, you will be redirected to a sign in page where the choice code is autofilled.
+2. Then, enter a username and optional password and click `REGISTER`.
+3. If your username is unique to this choice, you will be signed in and redirected to the choice page.
 
-In the project directory, you can run:
+### If you have a choice code
+1. First, navigate to [HOME](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/).
+2. Enter your username, optional password, and choice code, and then click `REGISTER`.
+3. If your choice code is valid, and your username is unique to this choice, you will be signed in and redirected to the choice page.
 
-### `yarn start`
+## Login to a Choice
+You can login to a choice in two ways:
+### If you have a link to the choice
+1. By following that link, you will be redirected to a sign in page where the choice code is autofilled.
+2. Then, enter a username and optional password and click `LOGIN`.
+3. If your username and password are correct, you will be signed in and redirected to the choice page.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### If you have a choice code
+1. First, navigate to [HOME](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/).
+2. Enter your username, optional password, and choice code, and then click `LOGIN`.
+3. If your choice code is valid, and your username and password are correct, you will be signed in and redirected to the choice page.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Approval and Disapproval
+- You can voice your opinions on an alternative via the 'thumbs up' and 'thumbs down' buttons located at the bottom of each alternative.
+- To approve of an alternative, select thumbs up. 
+- To disapprove of an alternative, select thumbs down.
+- Selecting approve when you have already selected disapprove will remove your disapproval and add your approval, and vice versa. 
+- You can also remove your opinion by selecting the same button again.
+- The number of others who have approved or dispproved is displayed to the right of their respective icons. 
+- To view a list of names of approvers or disapprovers, simply hover over their respective icons. 
 
-### `yarn test`
+**Note: there is often a second or two of delay before the count and list of names update after changing your selection.**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Refreshing the Page
+- To update your view of the choice, you can simply refresh the page.
+- Upon refreshing, you will be redirected to sign in, with the choice code autofilled. 
+- Enter your username and password and click `LOGIN` to return to an updated view of the choice. 
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Administration
+- The administration page is accessible at [http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/admin](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/admin).
+- This page displays the Choice ID, creation date, and completion status of every choice in the production database. 
+- It also shows a nonfunctional option to clear choices older than a certain age. 
