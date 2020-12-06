@@ -112,7 +112,7 @@ export default class Create extends React.Component {
             console.log("choice is updated");
         
             this.props.updateChoice(thechoice);
-            this.props.updateUser({username :  this.state.username, password : this.state.password, id : theuser.id});
+            this.props.updateUser({username :  this.state.username, password : this.state.password, id : theuser.id, auth: theuser.authentication});
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
         }
@@ -196,7 +196,7 @@ export default class Create extends React.Component {
                           name='maxCollabs'
                           variant='standard' 
                           margin='dense' 
-                          InputLabelProps={{shrink: true}}
+                          InputLabelProps={{shrink: true}}y
                           inputProps={{ min: "1", step: "1" }}
                           type='number'
                           value={this.state.maxCollabs}

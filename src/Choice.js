@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import {createMuiTheme, ThemeProvider, Container, Grid, Typography} from '@material-ui/core';
+import {createMuiTheme, ThemeProvider, Container, Grid, Typography, Tooltip, IconButton} from '@material-ui/core';
+import SyncRoundedIcon from '@material-ui/icons/SyncRounded';
 import Feedback from './Feedback.js'
 import Alternative from './Alternative.js'
 
@@ -54,8 +55,7 @@ export default class Choice extends React.Component {
             }
         }
 
-        this.updateApproval = this.updateApproval.bind(this);
-        this.updateDisapproval = this.updateDisapproval.bind(this);
+        this.refreshChoice = this.refreshChoice.bind(this);
         this.showFeedback= this.showFeedback.bind(this);
     }
 
@@ -75,9 +75,17 @@ export default class Choice extends React.Component {
 
     componentWillUnmount(){}
 
-    updateApproval = (e) => {}
+    refreshChoice = async (e) => {
+        const response = await axios({
+            method: 'GET',
+            url : `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}?authentication=${this.props.user.auth}`
+        });
 
-    updateDisapproval = (e) => {}
+        if (response.data.statusCode === 200) {
+            let thechoice = JSON.parse(response.data.body);
+            this.props.updateChoice(thechoice);
+        }
+    }
 
     showFeedback = (e) => {
         return ( <Feedback alternative={this.props.alternatives[e.target.id]}/> );
@@ -94,6 +102,12 @@ export default class Choice extends React.Component {
                         <Typography variant='h5'>The Question:</Typography>
                     </Grid>
                     <Typography variant='h4'>{this.props.choice.question}</Typography>
+                    <Tooltip title='Refresh Content' placement='right'>
+                            <IconButton className='refreshButton' onClick={this.refreshChoice}>
+                                <SyncRoundedIcon 
+                                    color='primary' />
+                            </IconButton>
+                        </Tooltip>
                     <Grid container item xs={12} justify='center'>
                         <Typography variant='overline'>{`Choice Code: ${this.props.choice.id}`}</Typography>
                     </Grid>

@@ -74,7 +74,7 @@ export default class SignIn extends React.Component {
             let thechoice = JSON.parse(response2.data.body);
         
             this.props.updateChoice(thechoice);
-            this.props.updateUser({username :  this.state.username, password : this.state.password, id : theuser.id});
+            this.props.updateUser({username :  this.state.username, password : this.state.password, id : theuser.id, auth: theuser.authentication});
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
         } else {
@@ -109,7 +109,7 @@ export default class SignIn extends React.Component {
             let thechoice = JSON.parse(response2.data.body);
             
             this.props.updateChoice(thechoice);
-            this.props.updateUser({username :  this.state.username, password : this.state.password, id : theuser.id});
+            this.props.updateUser({username :  this.state.username, password : this.state.password, id : theuser.id, auth: theuser.authentication});
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
         } else {
