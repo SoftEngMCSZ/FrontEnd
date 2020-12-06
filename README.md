@@ -1,5 +1,7 @@
 # README
 
+Find our website [here](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/).
+
 ## Creating a Choice
 - To create a choice, first navigate to [CREATE](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/create).
 - You are required to provide a username for yourself, a title for the choice, and the number of people you want to invite.
@@ -43,9 +45,8 @@ You can login to a choice in two ways:
 **Note: there is often a second or two of delay before the count and list of names update after changing your selection.**
 
 ## Refreshing the Page
-- To update your view of the choice, you can simply refresh the page.
-- Upon refreshing, you will be redirected to sign in, with the choice code autofilled. 
-- Enter your username and password and click `LOGIN` to return to an updated view of the choice. 
+- To update your view of the choice, click the teal sync icon next to the choice question. 
+- You could also refresh the page, but refreshing will prompt you to sign in again
 
 ## Administration
 - The administration page is accessible at [http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/admin](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/admin).
