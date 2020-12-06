@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Grid, Button, TextField, Typography, ThemeProvider, createMuiTheme} from '@material-ui/core'
+import {Container, Grid, Button, TextField, Typography, Paper, Divider, ThemeProvider, createMuiTheme, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from '@material-ui/core'
 import ChoiceTableItem from './ChoiceTableItem.js'
 import axios from 'axios';
 
@@ -57,15 +57,15 @@ export default class Admin extends React.Component {
         console.log(choices)
         return (
             <ThemeProvider theme={theme}>
-                <Container maxWidth='sm'>
+                <Container maxWidth='md'>
                 <Grid container spacing={1} direction='column'>
-                    <Grid container item xs={12} direction='row' justify='flex-start' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
+                    <Grid container item xs direction='row' justify='flex-start' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}}>
                         <Typography variant='h4'>Manage</Typography>
                     </Grid>
-                    <Grid container item xs direction='row' wrap='nowrap' alignItems='baseline'>
-                        <Grid container item xs={4}>
+                    <Grid container item xs={12} direction='row' wrap='nowrap' alignItems='baseline' style={{margin: `${theme.spacing(1)}px auto`, paddingBottom: theme.spacing(2)}}>
+                        <Grid container item xs={3}>
                             <Typography variant='subtitle1'>
-                                Clear Choices more than
+                                Remove Choices more than
                             </Typography>
                         </Grid>
                         <Grid container item xs={1}>
@@ -76,7 +76,7 @@ export default class Admin extends React.Component {
                                 size='small'
                                 style={{width: 40}}></TextField>
                         </Grid>
-                        <Grid container item xs>
+                        <Grid container item xs={2}>
                             <Typography variant='subtitle1'>
                                 days old.
                             </Typography>
@@ -88,17 +88,31 @@ export default class Admin extends React.Component {
                                 Delete</Button>
                         </Grid>
                     </Grid>
-                    <Grid container item xs>
-                        <Typography variant='h6'>
-                            Current Choices:
-                        </Typography>
-                    </Grid>
                     <Grid>
-                    {choices.map((choice, idx) => {
-                        return (
-                            <ChoiceTableItem data={choice} id={idx}/>
-                        );
-                    })}
+                    <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                        <TableRow>
+                            <TableCell>Choice ID</TableCell>
+                            <TableCell align="right">Choice Description</TableCell>
+                            <TableCell align="right">Creation Date</TableCell>
+                            <TableCell align="right">Completed?</TableCell>
+                        </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {choices.map((choice) => (
+                            <TableRow key={choice.id}>
+                            <TableCell component="th" scope="row">
+                                {choice.id}
+                            </TableCell>
+                            <TableCell align="right">Pass Me Questions PLS</TableCell>
+                            <TableCell align="right">{choice.creationTime}</TableCell>
+                            <TableCell align="right">{choice.isCompleted ? 'Completed' : 'Incomplete'}</TableCell>
+                            </TableRow>
+                        ))}
+                        </TableBody>
+                    </Table>
+                    </TableContainer>
                 </Grid>
                 </Grid>
                 </Container>
