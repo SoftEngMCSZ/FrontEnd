@@ -29,9 +29,12 @@ export default class Feedback extends React.Component {
             feedbackID : uuidv4(),
             alternativeID : this.props.data.alternativeID,
             contents : '',
-            //author : this.props.user.name,
+            author : this.props.user.name,
             timestamp : ''
         }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.postFeedback = this.postFeedback.bind(this);
     }
 
     componentDidMount(){}
@@ -50,8 +53,12 @@ export default class Feedback extends React.Component {
             body: JSON.stringify(feedback)
         });
 
-        this.props.updateChoice(response);
+        this.props.updateChoice(JSON.parse(response.data.body));
     }
+
+    handleChange = (e) => {
+          this.setState({[e.target.name]: e.target.value });
+      }
 
     render() {
         let comments = this.props.data.feedback;
@@ -62,9 +69,12 @@ export default class Feedback extends React.Component {
                     <Grid container item xs={11}>
                     <TextField
                         label='Add feedback to this alternative'
+                        name='contents'
                         variant='outlined'
                         margin='dense'
                         fullWidth='true'
+                        value={this.state.contents}
+                        onChange={this.handleChange}
                         multiline
                         rowsMax={2}
                         InputLabelProps={{shrink: true}}></TextField>

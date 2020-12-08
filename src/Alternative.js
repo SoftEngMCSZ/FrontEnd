@@ -169,6 +169,26 @@ export default class Alternative extends React.Component {
         }
     }
 
+    finalize = async (event) => {
+        const body = { collabId: this.props.user.id,
+                        alternativeId : this.props.data.alternativeID,
+                     } 
+
+        const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            url: `URL HERE`,
+            data: JSON.stringify(body)
+        });
+        
+        if (response.data.statusCode === 200) {
+            let c = JSON.parse(response.data.body);
+            this.props.updateChoice(c);
+        }
+    }
+
     render(){
     let altId = this.props.id;
     let alt = this.props.data;
@@ -183,7 +203,7 @@ export default class Alternative extends React.Component {
             <Grid container xs htmlFor={altId} wrap='nowrap' direction='column' style={{margin: `${theme.spacing(1)}px auto`, padding: theme.spacing(2)}}>
                 <Grid container item xs direction='row' alignItems='center'>
                     <Typography variant='h5'>{`Alternative ${altId+1}`}</Typography>
-                    <Tooltip title='Mark as final' placement='right'>
+                    <Tooltip title='Mark as final' placement='right' onClick={this.finalize}>
                         <IconButton>
                             <GradeRounded />
                         </IconButton>
