@@ -1,5 +1,6 @@
 import React from 'react'
-import {Container, Grid, Button, TextField, Typography, Paper, Divider, ThemeProvider, createMuiTheme, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from '@material-ui/core'
+import {Container, Grid, Button, TextField, Typography, Paper, IconButton, ThemeProvider, createMuiTheme, Tooltip, Table, TableContainer, TableHead, TableBody, TableRow, TableCell} from '@material-ui/core'
+import SyncRoundedIcon from '@material-ui/icons/SyncRounded';
 import ChoiceTableItem from './ChoiceTableItem.js'
 import axios from 'axios';
 
@@ -27,7 +28,7 @@ export default class Admin extends React.Component {
             choices : []
         }
 
-        this.retrieveChoices.bind(this);
+       this.retrieveChoices = this.retrieveChoices.bind(this);
     }
 
     componentDidMount() {
@@ -87,6 +88,15 @@ export default class Admin extends React.Component {
                                 size='small'>
                                 Delete</Button>
                         </Grid>
+                    </Grid>
+                    <Grid container item xs={12} direction='row' wrap='nowrap' alignItems='center' style={{margin: `${theme.spacing(1)}px auto`, paddingBottom: theme.spacing(2)}}>
+                        <Typography variant='h5'>Current Choices</Typography>
+                        <Tooltip title='Sync Choices' placement='right'>
+                            <IconButton className='refreshButton' onClick={this.retrieveChoices}>
+                                <SyncRoundedIcon 
+                                    color='primary' />
+                            </IconButton>
+                        </Tooltip>
                     </Grid>
                     <Grid>
                     <TableContainer component={Paper}>
