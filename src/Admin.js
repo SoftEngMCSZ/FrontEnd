@@ -25,14 +25,21 @@ export default class Admin extends React.Component {
         super(props);
 
         this.state = {
-            choices : []
+            choices : [],
+            days: 0
         }
 
        this.retrieveChoices = this.retrieveChoices.bind(this);
+       this.deleteChoices = this.deleteChoices.bind(this);
+       this.handleChange= this.handleChange.bind(this);
     }
 
     componentDidMount() {
         this.retrieveChoices();
+    }
+
+    handleChange = (e) => {
+        this.setState({[e.target.name]: e.target.value });
     }
 
     async retrieveChoices() {
@@ -47,6 +54,25 @@ export default class Admin extends React.Component {
             data: JSON.stringify(body)
         });
 
+
+        let choicesToList = Object.values(JSON.parse(response.data.body))[0]
+
+        this.setState({choices : choicesToList})
+    }
+
+    async deleteChoices() {
+        let body = {
+            daysAgo: this.state.days
+        }
+        
+        const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/admin`,
+            data: JSON.stringify(body)
+        });
 
         let choicesToList = Object.values(JSON.parse(response.data.body))[0]
 
@@ -71,10 +97,13 @@ export default class Admin extends React.Component {
                         </Grid>
                         <Grid container item xs={1}>
                             <TextField
+                                name='days'
                                 type='number'
                                 variant='standard'
                                 margin='dense'
                                 size='small'
+                                value={this.state.days}
+                                onChange={this.handleChange}
                                 style={{width: 40}}></TextField>
                         </Grid>
                         <Grid container item xs={2}>
@@ -84,6 +113,7 @@ export default class Admin extends React.Component {
                         </Grid>
                         <Grid container item xs>
                             <Button
+                                onClick={this.deleteChoices}
                                 variant='contained'
                                 size='small'>
                                 Delete</Button>
@@ -115,7 +145,7 @@ export default class Admin extends React.Component {
                             <TableCell component="th" scope="row">
                                 {choice.id}
                             </TableCell>
-                            <TableCell align="right">Pass Me Questions PLS</TableCell>
+                            <TableCell align="right">{choice.question}</TableCell>
                             <TableCell align="right">{choice.creationTime}</TableCell>
                             <TableCell align="right">{choice.isCompleted ? 'Completed' : 'Incomplete'}</TableCell>
                             </TableRow>

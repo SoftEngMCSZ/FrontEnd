@@ -25,8 +25,8 @@ export default class Create extends React.Component {
 
       this.state = {
         question: '',
-        alternatives: [{alternativeID: '', contents: '', approvals: [], disapprovals: [], feedback: []},
-                       {alternativeID: '', contents: '', approvals: [], disapprovals: [], feedback: []}],
+        alternatives: [{alternativeId: '', contents: '', approvals: [], disapprovals: [], feedback: []},
+                       {alternativeId: '', contents: '', approvals: [], disapprovals: [], feedback: []}],
         maxCollabs: '',
         username : '',
         password : '',
@@ -43,8 +43,8 @@ export default class Create extends React.Component {
 
     createChoice = async (event) => {
 
-        this.state.alternatives[0].alternativeID = uuidv4();
-        this.state.alternatives[1].alternativeID = uuidv4();
+        this.state.alternatives[0].alternativeId = uuidv4();
+        this.state.alternatives[1].alternativeId = uuidv4();
 
         const choice = { question : this.state.question,
                          alternatives : this.state.alternatives,
@@ -126,7 +126,7 @@ export default class Create extends React.Component {
         if (this.state.alternatives.length < 5) {
             let uuid = uuidv4();
             this.setState((prevState) => ({
-                alternatives:[...prevState.alternatives, {alternativeID: uuid, contents: '', approvals: [], disapprovals: [], feedback: []}],
+                alternatives:[...prevState.alternatives, {alternativeId: uuid, contents: '', approvals: [], disapprovals: [], feedback: []}],
             }));
         }
     }
