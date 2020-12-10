@@ -4,6 +4,7 @@ import {createMuiTheme, ThemeProvider, Container, Grid, Typography, Tooltip, Ico
 import SyncRoundedIcon from '@material-ui/icons/SyncRounded';
 import Feedback from './Feedback.js'
 import Alternative from './Alternative.js'
+import FinalizedAlternative from './FinalizedAlternative.js'
 
 const theme = createMuiTheme({
     spacing: 8,
@@ -13,7 +14,7 @@ const theme = createMuiTheme({
             main: '#009688', //teal
         },
         secondary: {
-            main: '#ffb74d', //orange
+            main: '##ffca28', //orange
         },
     },
     formControl: {
@@ -62,12 +63,14 @@ export default class Choice extends React.Component {
     componentDidMount(){
         const { match: {params}} = this.props;
         if (params.id === this.props.choice.id) {
-            // if (this.props.choice.id !== params.id) {
-            //     this.props.history.push(`/choice/${params.id}`);
-            // }
+            let finalized = false;
+            if (this.props.choice.finalDecision !== undefined) {
+               finalized = true;
+            }
             this.setState({choice : this.props.choice});
             console.log(this.props.user)
             this.setState({user : this.props.user});
+            this.setState({isFinalized : finalized});
         } else {
             this.props.history.push(`/choice/${params.id}`);
         }
@@ -111,6 +114,12 @@ export default class Choice extends React.Component {
                     <Grid container item xs={12} justify='center'>
                         <Typography variant='overline'>{`Choice Code: ${this.props.choice.id}`}</Typography>
                     </Grid>
+                </Grid>
+                <Grid>
+                    { this.state.finalized
+                        ? <FinalizedAlternative data={this.props.choice.finalDecision} user={this.props.user} updateChoice={this.props.updateChoice}/>
+                        : null
+                     } 
                 </Grid>
                 <Grid item xs direction='row'>
                     { this.props.choice.alternatives.map((alt, idx) => {

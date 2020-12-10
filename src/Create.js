@@ -11,7 +11,7 @@ const theme = createMuiTheme({
             main: '#009688', //teal
         },
         secondary: {
-            main: '#ffb74d', //orange
+            main: '#ffca28', //orange
         },
     },
     formControl: {
