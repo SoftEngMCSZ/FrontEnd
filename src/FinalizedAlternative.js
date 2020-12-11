@@ -35,35 +35,17 @@ export default class FinalizedAlternative extends React.Component {
         }
 
         this.showFeedback = this.showFeedback.bind(this)
+        console.log(this.props)
     }
 
     showFeedback = (e) => {
+        
         if (this.state.viewFeedback) { 
             this.setState({viewFeedback: false})
             this.setState({feedbackColor: ''})
         } else {
             this.setState({viewFeedback: true})
             this.setState({feedbackColor: 'primary'})
-        }
-    }
-
-    finalize = async (event) => {
-        const body = { collabId: this.props.user.id,
-                        alternativeId : this.props.data.alternativeID,
-                     } 
-
-        const response = await axios({
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST',
-            url: `URL HERE`,
-            data: JSON.stringify(body)
-        });
-        
-        if (response.data.statusCode === 200) {
-            let c = JSON.parse(response.data.body);
-            this.props.updateChoice(c);
         }
     }
 
@@ -119,7 +101,7 @@ export default class FinalizedAlternative extends React.Component {
                     </Grid>
                 </Grid>
                  { this.state.viewFeedback
-                    ? <Feedback data={alt} user={this.props.user} updateChoice={this.props.updateChoice}/>
+                    ? <Feedback data={alt} user={this.props.user} updateChoice={this.props.updateChoice} choice={this.props.choice}/>
                     : null
                 }
             </Grid>

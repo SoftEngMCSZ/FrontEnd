@@ -30,7 +30,7 @@ export default class Choice extends React.Component {
             choice : {
                 choiceID: 'ABCDEFG',
                 question: 'What should we get for lunch?',
-                finalDecision: {},
+                finalAlternative: {},
                 alternatives: [
                     {alternativeID: 'ABC123', 
                     contents: 'Habachi',
@@ -63,14 +63,9 @@ export default class Choice extends React.Component {
     componentDidMount(){
         const { match: {params}} = this.props;
         if (params.id === this.props.choice.id) {
-            let finalized = false;
-            if (this.props.choice.finalDecision !== undefined) {
-               finalized = true;
-            }
             this.setState({choice : this.props.choice});
             console.log(this.props.user)
             this.setState({user : this.props.user});
-            this.setState({isFinalized : finalized});
         } else {
             this.props.history.push(`/choice/${params.id}`);
         }
@@ -116,8 +111,8 @@ export default class Choice extends React.Component {
                     </Grid>
                 </Grid>
                 <Grid>
-                    { this.state.finalized
-                        ? <FinalizedAlternative data={this.props.choice.finalDecision} user={this.props.user} updateChoice={this.props.updateChoice}/>
+                    { this.props.choice.finalAlternative !== undefined
+                        ? <FinalizedAlternative data={this.props.choice.finalAlternative} user={this.props.user} updateChoice={this.props.updateChoice} choice={this.props.choice}/>
                         : null
                      } 
                 </Grid>

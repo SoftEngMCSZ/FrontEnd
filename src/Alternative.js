@@ -52,38 +52,44 @@ export default class Alternative extends React.Component {
     }
 
     updateApproval = async (e) => {
-        if (this.state.liked === '') {
-            this.setState({liked : 'primary'})
-            await this.postAddApproval();
-
-            if (this.state.disliked === 'primary') {
-                this.setState({disliked : ''});
+        console.log(this.props.choice.finalAlternative)
+        if (this.props.choice.finalAlternative === undefined) {
+            if (this.state.liked === '') {
+                this.setState({liked : 'primary'})
+                
+                await this.postAddApproval();
+    
+                if (this.state.disliked === 'primary') {
+                    this.setState({disliked : ''});
+                }
+                
+            } else {
+                this.setState({liked : ''})
+                await this.postRemoveApproval();
             }
-            
-        } else {
-            this.setState({liked : ''})
-            await this.postRemoveApproval();
         }
     }
 
     updateDisapproval = async (e) => {
-        if (this.state.disliked === '') {
-            this.setState({disliked : 'primary'})
-            await this.postAddDisapproval();
+        if (this.props.choice.finalAlternative === undefined) {
+            if (this.state.disliked === '') {
+                this.setState({disliked : 'primary'})
+                await this.postAddDisapproval();
 
-            if (this.state.liked === 'primary') {
-                this.setState({liked : ''})
+                if (this.state.liked === 'primary') {
+                    this.setState({liked : ''})
+                }
+                
+            } else {
+                this.setState({disliked : ''})
+                await this.postRemoveDisapproval();
             }
-            
-        } else {
-            this.setState({disliked : ''})
-            await this.postRemoveDisapproval();
         }
     }
 
     postAddApproval = async (event) => {
         const body = {  collabId: this.props.user.id,
-                        alternativeId : this.props.data.alternativeID,
+                        alternativeId : this.props.data.alternativeId,
                         opinionType : 'approval',
                         actionType : 'add',
                     } 
@@ -93,7 +99,7 @@ export default class Alternative extends React.Component {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/opinion`,
             data: JSON.stringify(body)
         });
 
@@ -105,7 +111,7 @@ export default class Alternative extends React.Component {
 
     postAddDisapproval = async (event) => {
         const body = { collabId: this.props.user.id,
-                        alternativeId : this.props.data.alternativeID,
+                        alternativeId : this.props.data.alternativeId,
                         opinionType : 'disapproval',
                         actionType : 'add',
                      } 
@@ -115,7 +121,7 @@ export default class Alternative extends React.Component {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/opinion`,
             data: JSON.stringify(body)
         });
         
@@ -127,7 +133,7 @@ export default class Alternative extends React.Component {
 
     postRemoveApproval = async (event) => {
         const body = {  collabId: this.props.user.id,
-                        alternativeId : this.props.data.alternativeID,
+                        alternativeId : this.props.data.alternativeId,
                         opinionType : 'approval',
                         actionType : 'remove',
                     } 
@@ -137,7 +143,7 @@ export default class Alternative extends React.Component {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/opinion`,
             data: JSON.stringify(body)
         });
 
@@ -149,7 +155,7 @@ export default class Alternative extends React.Component {
 
     postRemoveDisapproval = async (event) => {
         const body = { collabId: this.props.user.id,
-                        alternativeId : this.props.data.alternativeID,
+                        alternativeId : this.props.data.alternativeId,
                         opinionType : 'disapproval',
                         actionType : 'remove',
                      } 
@@ -159,7 +165,7 @@ export default class Alternative extends React.Component {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/betaMaybe/choice/${this.props.choice.id}/opinion`,
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/opinion`,
             data: JSON.stringify(body)
         });
         
@@ -170,8 +176,8 @@ export default class Alternative extends React.Component {
     }
 
     finalize = async (event) => {
-        const body = { collabId: this.props.user.id,
-                        alternativeId : this.props.data.alternativeID,
+        const body = {
+                        alternativeId : this.props.data.alternativeId
                      } 
 
         const response = await axios({
@@ -179,7 +185,7 @@ export default class Alternative extends React.Component {
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            url: `URL HERE`,
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/finalize`,
             data: JSON.stringify(body)
         });
         
@@ -243,7 +249,7 @@ export default class Alternative extends React.Component {
                     </Grid>
                 </Grid>
                  { this.state.viewFeedback
-                    ? <Feedback data={alt} user={this.props.user} updateChoice={this.props.updateChoice}/>
+                    ? <Feedback data={alt} user={this.props.user} updateChoice={this.props.updateChoice} choice={this.props.choice}/>
                     : null
                 }
             </Grid>

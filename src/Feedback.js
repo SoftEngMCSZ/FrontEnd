@@ -26,11 +26,9 @@ export default class Feedback extends React.Component {
         super(props)
 
         this.state = {
-            feedbackID : uuidv4(),
-            alternativeID : this.props.data.alternativeID,
+            collaboratorId : this.props.user.id,
+            alternativeId : this.props.data.alternativeId,
             contents : '',
-            author : this.props.user.name,
-            timestamp : ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -43,14 +41,19 @@ export default class Feedback extends React.Component {
 
     postFeedback = async (e) => {
         let feedback = this.state;
-        feedback.timestamp = new Date().toISOString();
+
+        console.log(JSON.stringify(feedback))
+        console.log(`https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/feedback`)
 
         if (feedback.contents === '') { return; }
 
         const response = await axios({
+            headers: {
+                'Content-Type': 'application/json',
+            },
             method: 'POST',
-            url: `/choice/feedback`,
-            body: JSON.stringify(feedback)
+            url: `https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/feedback`,
+            data: JSON.stringify(feedback)
         });
 
         this.props.updateChoice(JSON.parse(response.data.body));
@@ -65,28 +68,31 @@ export default class Feedback extends React.Component {
         return (
             <ThemeProvider theme={theme}>
             <Grid container xs direction='column'>
-                <Grid container item wrap='nowrap' direction='row'>
-                    <Grid container item xs={11}>
-                    <TextField
-                        label='Add feedback to this alternative'
-                        name='contents'
-                        variant='outlined'
-                        margin='dense'
-                        fullWidth='true'
-                        value={this.state.contents}
-                        onChange={this.handleChange}
-                        multiline
-                        rowsMax={2}
-                        InputLabelProps={{shrink: true}}></TextField>
-                    </Grid>
-                    <IconButton onClick={this.postFeedback}>
-                        <SendRoundedIcon />
-                    </IconButton>
-                </Grid>
+                {
+                    this.props.choice.finalAlternative === undefined ? 
+                    <Grid container item wrap='nowrap' direction='row'>
+                        <Grid container item xs={11}>
+                        <TextField
+                            label='Add feedback to this alternative'
+                            name='contents'
+                            variant='outlined'
+                            margin='dense'
+                            fullWidth='true'
+                            value={this.state.contents}
+                            onChange={this.handleChange}
+                            multiline
+                            rowsMax={2}
+                            InputLabelProps={{shrink: true}}></TextField>
+                        </Grid>
+                        <IconButton onClick={this.postFeedback}>
+                            <SendRoundedIcon />
+                        </IconButton>
+                    </Grid> : null
+                }
                 <Grid>
                     {comments.map((comment, idx) => {
                         return (
-                            <Comment data={comment} id={idx}/>
+                            <Comment choice={this.props.choice} data={comment} id={idx}/>
                         );
                     })}
                 </Grid>
