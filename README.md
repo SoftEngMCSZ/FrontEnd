@@ -44,6 +44,22 @@ You can login to a choice in two ways:
 
 **Note: there is often a second or two of delay before the count and list of names update after changing your selection.**
 
+## Adding Feedback 
+- You can add feedback to an alternative by selecting the callout icon at the bottom of each alternative
+- Enter your feedback into the text field 
+- Click the paper plane icon to the right of the text field to submit your feedback 
+- Your feedback will instantly display with your name
+
+## Viewing Feedback 
+- You can read existing feedback on an alternative by selecting the callout icon at the bottom of each alternative
+- To hide the feedback again, simply click the callout icon again.
+
+## Finalizing a Choice 
+- If you are ready to finalize your choice, click the star icon on the alternative you want to choose
+- The page will refresh to a new view where the selected choice is highlighted. 
+
+**Note: once a choice is finalized, you will not be able to change opinions, add feedback, or finalize any other alternatives**
+
 ## Refreshing the Page
 - To update your view of the choice, click the teal sync icon next to the choice question. 
 - You could also refresh the page, but refreshing will prompt you to sign in again
@@ -51,4 +67,8 @@ You can login to a choice in two ways:
 ## Administration
 - The administration page is accessible at [http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/admin](http://whatdo.me.s3-website-us-east-1.amazonaws.com/#/admin).
 - This page displays the Choice ID, creation date, and completion status of every choice in the production database. 
-- It also shows a nonfunctional option to clear choices older than a certain age. 
+
+### Clearing Choices
+- Enter a number of days into the textfield in "Remove Choices more than ___ days old" 
+- Click DELETE
+- Click the sync button to see the choices have been cleared. 

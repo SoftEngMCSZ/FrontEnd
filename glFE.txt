@@ -1,0 +1,191 @@
+commit eedea1d74243601f48609fa4558223aa3b8fa4ac
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Thu Dec 10 23:23:47 2020 -0500
+
+    Descriptive signin error messages
+
+commit 4c5ed0c58678b666e29b721bcad3868a6078bd6d
+Author: SamuelCurrid <samuelcurrid@gmail.com>
+Date:   Thu Dec 10 23:06:27 2020 -0500
+
+    Bug fixes for finalization/feedback
+
+commit 7c9c92e7687c6e5e7ebb67995830cdaa0bd3bdfb
+Author: SamuelCurrid <samuelcurrid@gmail.com>
+Date:   Thu Dec 10 22:53:20 2020 -0500
+
+    Implemented feedback and finalization
+
+commit f5eac4199e99114860a1301ea154115026619131
+Author: SamuelCurrid <samuelcurrid@gmail.com>
+Date:   Thu Dec 10 17:58:41 2020 -0500
+
+    Admin choice deletion
+
+commit 1cb46edaf163a690751db4843e196467875bd751
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Thu Dec 10 12:29:26 2020 -0500
+
+    added final decision formatting
+
+commit 637fc32bff6932778f72cc72429bfda0fbeb099c
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Tue Dec 8 10:57:59 2020 -0500
+
+    sketched in post requests for finalizing a choice and adding feedback
+
+commit 2b33b71d759d29a5000a97431b2e45aca66c77f5
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Mon Dec 7 20:09:47 2020 -0500
+
+    admin sync choices button
+
+commit 6ff0f93beae7e0d12fc835e08e71b72e04144d92
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sat Dec 5 22:25:09 2020 -0500
+
+    admin page table
+
+commit 3fb86d94de6c2e55148ff8e08d423298729a5112
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sat Dec 5 20:04:02 2020 -0500
+
+    updated readme
+
+commit 6c76ed3cb9eb36cce455cf1266151274a2a9993b
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sat Dec 5 19:49:35 2020 -0500
+
+    added a refresh button to choice pages
+
+commit 207be636a164ac714258da17108a5e6fb71d0f83
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sat Dec 5 18:10:07 2020 -0500
+
+    Updated README, changed numCollaborators from a dropdown to a textfield
+
+commit a6907435ad1dfc8847e1b5649da39fd568cdb705
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sat Dec 5 16:50:45 2020 -0500
+
+    made admin page prettier
+
+commit 7b66d29830a62a9b6fa86a9a4869d071b176df7b
+Author: SamuelCurrid <samuelcurrid@gmail.com>
+Date:   Sat Dec 5 16:11:52 2020 -0500
+
+    Admin report functionality
+
+commit 45766f46b232a4b97529e05596a4eb540e9f2ef3
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sat Dec 5 08:53:40 2020 -0500
+
+    minor change to request format to make it less likely to die
+
+commit ae427ed60d4dc882d8a5af855382bccc5b0f86e7
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sat Dec 5 08:51:03 2020 -0500
+
+    Sketched adminPOST request, needs to be finished
+
+commit 4caadae71d071c0ff29d3023d24a1ae75e8fb2f7
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Fri Dec 4 22:58:23 2020 -0500
+
+    implemented like/dislike, unified endpoint for login
+
+commit 7247547a8efda3016e0f6ecf209b465274ca4cdd
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sun Nov 29 14:58:08 2020 -0500
+
+    Added frontend feedback for user error/bad input, clarified sign in page.
+
+commit 2daf637d9e8eb2e69d50247d8231138a25ae16bb
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Thu Nov 26 11:21:22 2020 -0500
+
+    Refreshing the choice/view page now redirects you to re-sign in rather than showing dummy data
+
+commit 1a1884269d4c142f573687136c6fbb0ef2d754a4
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Wed Nov 25 16:59:39 2020 -0500
+
+    First deliverable
+
+commit 2fb2459bc849e37156c7046e732fce481c8b55b9
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Wed Nov 25 07:26:12 2020 -0500
+
+    all the basic functionality
+
+commit 2cce40a5afc320c068c9f55a72e5d6e65db0beb7
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Wed Nov 25 04:12:26 2020 -0500
+
+    holy crap this doesnt work but its 4am
+
+commit acf628ed1340698916743e609b26e96f7e9e33e9
+Author: SamuelCurrid <samuelcurrid@gmail.com>
+Date:   Tue Nov 24 20:45:35 2020 -0500
+
+    Fixed password state bug
+
+commit 2c4bf50ffbf3697425692625f0aaf1f43a166465
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Tue Nov 24 20:41:35 2020 -0500
+
+    Trying to connect to /choice/make - DOES NOT WORK
+
+commit b58f3db190912f4836b8e331a721e7e850355d4f
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Tue Nov 24 16:04:14 2020 -0500
+
+    moved choice data from Choice.js to App.js, to make routing from SignIn to Choice possible
+
+commit ded2416c874884e1bbffc0a71a72ffb31dcec4b7
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Tue Nov 24 13:35:05 2020 -0500
+
+    pencilling in http requests and signin routing
+
+commit 1c5de83e050d99fc91e34a7e66bc9b2ed633f6eb
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Mon Nov 23 23:06:43 2020 -0500
+
+    fixed create page
+
+commit d59c5f8b494bcff1fe4bfd61d4c94d6f3fe41214
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Mon Nov 23 21:41:52 2020 -0500
+
+    cleaned up imports
+
+commit 0d8c4a658b9ab57b336a8c7f949c2f0be569409b
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Mon Nov 23 19:44:59 2020 -0500
+
+    added admin page, fancy routing to signin page
+
+commit f082f54027aa04fb86ecfa81f8face1d60d8ba8a
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Mon Nov 23 14:07:55 2020 -0500
+
+    feedback and signin ui
+
+commit 8807f5658608773502c5522f15033c3672c707ad
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sun Nov 22 13:03:42 2020 -0500
+
+    alternative icon buttons and tooltips
+
+commit 9f6528047c1530686bb0fd06ba5a599107d6c82a
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Sun Nov 22 12:38:04 2020 -0500
+
+    creation form and view skeleton
+
+commit 1806e382e74b66a37dbbb7e0541967fb43b313d2
+Author: chaarke <54222322+chaarke@users.noreply.github.com>
+Date:   Fri Nov 20 10:57:42 2020 -0500
+
+    Initialize project using Create React App
