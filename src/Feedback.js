@@ -42,9 +42,6 @@ export default class Feedback extends React.Component {
     postFeedback = async (e) => {
         let feedback = this.state;
 
-        console.log(JSON.stringify(feedback))
-        console.log(`https://xqzvoxzs7g.execute-api.us-east-1.amazonaws.com/beta/choice/${this.props.choice.id}/feedback`)
-
         if (feedback.contents === '') { return; }
 
         const response = await axios({
@@ -57,6 +54,7 @@ export default class Feedback extends React.Component {
         });
 
         this.props.updateChoice(JSON.parse(response.data.body));
+        this.setState({contents : ''})
     }
 
     handleChange = (e) => {

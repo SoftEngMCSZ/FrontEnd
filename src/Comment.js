@@ -32,7 +32,9 @@ export default class Comment extends React.Component {
     getAuthor(authorID) {
         let collaborators = this.props.choice.collaborators
 
-        collaborators.filter(collaborator => collaborator.id == authorID);
+        console.log(collaborators)
+
+        collaborators = collaborators.filter(collaborator => collaborator.id === authorID);
         console.log(collaborators[0])
         return collaborators[0];
     };
