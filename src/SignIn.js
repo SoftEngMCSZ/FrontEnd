@@ -163,7 +163,7 @@ export default class SignIn extends React.Component {
                     </Grid>
                     <Grid container item xs alignItems='center' wrap='nowrap' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}} >
                             { this.state.badLogin
-                                ? <Typography variant='caption'>{this.state.errorMessage}</Typography>
+                                ? <Typography variant='caption'>{this.state.errorMessage.substring(3)}</Typography>
                                 : null
                             }
                     </Grid>
