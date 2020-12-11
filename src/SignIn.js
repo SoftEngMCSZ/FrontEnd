@@ -27,8 +27,8 @@ export default class SignIn extends React.Component {
             username : '',
             password : '',
             id : '',
-            badRegister : false,
-            badLogin : false
+            badLogin : false,
+            errorMessage: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -78,7 +78,8 @@ export default class SignIn extends React.Component {
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
         } else {
-            this.setState({badLogin : true});
+            let theerror = JSON.parse(response.data.body)
+            this.setState({badLogin : true, errorMessage : theerror.Message});
         }
     }
 
@@ -113,7 +114,8 @@ export default class SignIn extends React.Component {
 
             this.props.history.push(`/choice/${thechoice.id}/view`);
         } else {
-            this.setState({badRegister : true});
+            let theerror = JSON.parse(response.data.body)
+            this.setState({badLogin : true, errorMessage : theerror.Message});
         }
 
     }
@@ -160,12 +162,8 @@ export default class SignIn extends React.Component {
                         </Grid>
                     </Grid>
                     <Grid container item xs alignItems='center' wrap='nowrap' justify='center' style={{marginTop: `${theme.spacing(1)}px auto`, paddingTop: theme.spacing(2)}} >
-                            { this.state.badRegister
-                                ? <Typography variant='caption'>User already registered.</Typography>
-                                : null
-                            }
                             { this.state.badLogin
-                                ? <Typography variant='caption'>Username or password is not correct.</Typography>
+                                ? <Typography variant='caption'>{this.state.errorMessage}</Typography>
                                 : null
                             }
                     </Grid>
